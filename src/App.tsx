@@ -6,10 +6,10 @@ import { Footer } from "./components/Footer";
 
 function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-sans selection:bg-brand-500/30 selection:text-brand-900 dark:selection:text-brand-200 transition-colors duration-300">
       <Hero />
-      <Features />
       <Showcase />
+      <Features />
       <Pricing />
       <Footer />
     </div>

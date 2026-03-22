@@ -174,7 +174,7 @@ export function Features() {
               몰입을 돕는 강력한 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500 font-extrabold">도구들</span>
             </h2>
             <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-              너무 많은 공간을 차지하지 않고 본질에 집중할 수 있게 해주는 6가지 핵심 엔터프라이즈 기능을 만나보세요.
+            본질에 집중할 수 있게 해주는 6가지 핵심 기능을 만나보세요.
             </p>
           </div>
           

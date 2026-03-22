@@ -52,7 +52,7 @@ const plans: readonly Plan[] = [
     price: null,
     description: "대규모 조직 맞춤 설계 및 도메인",
     cta: "문의하기",
-    href: "mailto:contact@comuboard.com",
+    href: "mailto:admin@comuboard.com",
     highlighted: false,
   },
 ];

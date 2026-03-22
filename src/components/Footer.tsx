@@ -1,3 +1,38 @@
+/** Letter colors aligned with `public/logo.png` (roof → pillars → base, left to right). */
+const COMUBOARD_LOGO_LETTERS: readonly {
+  readonly ch: string;
+  readonly color: string;
+}[] = [
+  { ch: "C", color: "#48C0D4" },
+  { ch: "o", color: "#97E7B0" },
+  { ch: "m", color: "#97E7B0" },
+  { ch: "u", color: "#97E7B0" },
+  { ch: "B", color: "#FBA7BC" },
+  { ch: "o", color: "#F17E5D" },
+  { ch: "a", color: "#F17E5D" },
+  { ch: "r", color: "#F17E5D" },
+  { ch: "d", color: "#48C0D4" },
+];
+
+function ComuBoardWordmark({ className }: { readonly className?: string }) {
+  return (
+    <span
+      className={`tracking-tight font-bold ${className ?? ""}`}
+      translate="no"
+    >
+      {COMUBOARD_LOGO_LETTERS.map(({ ch, color }, i) => (
+        <span
+          key={`${ch}-${i}`}
+          style={{ color }}
+          className="[text-shadow:0_0_0.5px_rgba(15,23,42,0.06)] dark:[text-shadow:0_0_1px_rgba(0,0,0,0.35)]"
+        >
+          {ch}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export function Footer() {
   const year = new Date().getFullYear();
 
@@ -6,27 +41,17 @@ export function Footer() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div>
-            <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">ComuBoard</span>
+            <ComuBoardWordmark className="text-xl" />
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               커뮤니티를 위한 올인원 SaaS 플랫폼
             </p>
           </div>
-          <div className="flex gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <a
-              href="https://github.com/rookiecj/comuboard-be"
-              className="transition hover:text-brand-500 dark:hover:text-brand-400"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              href="mailto:contact@comuboard.com"
-              className="transition hover:text-brand-500 dark:hover:text-brand-400"
-            >
-              Contact
-            </a>
-          </div>
+          <a
+            href="mailto:admin@comuboard.com"
+            className="text-sm font-medium text-slate-500 transition hover:text-brand-500 dark:text-slate-400 dark:hover:text-brand-400"
+          >
+            Contact
+          </a>
         </div>
         <p className="mt-8 text-center text-sm text-slate-400 dark:text-slate-500">
           &copy; {year} ComuBoard. All rights reserved.

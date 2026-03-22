@@ -1,4 +1,5 @@
 import { Check, Star, ChevronRight } from "lucide-react";
+import { APP_ROUTES } from "../config";
 
 interface CapacityRow {
   readonly label: string;
@@ -33,7 +34,7 @@ const plans: readonly Plan[] = [
     priceUnit: "",
     description: "개인 또는 소규모 커뮤니티",
     cta: "무료로 시작하기",
-    href: "https://comuboard.com/signup",
+    href: APP_ROUTES.signup,
     highlighted: false,
   },
   {
@@ -44,7 +45,7 @@ const plans: readonly Plan[] = [
     description: "성장하는 커뮤니티를 위한 최적의 선택",
     badge: "50% 프로모션",
     cta: "Pro 시작하기",
-    href: "https://comuboard.com/signup?plan=pro",
+    href: APP_ROUTES.signupWithPlan("pro"),
     highlighted: true,
   },
   {

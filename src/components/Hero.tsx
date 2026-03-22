@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Sparkles, ChevronRight } from "lucide-react";
+import { APP_ROUTES } from "../config";
 
 /**
  * Check if the user is authenticated by looking for a JWT token cookie.
@@ -87,7 +88,7 @@ export function Hero() {
         >
           {authenticated ? (
             <a
-              href="https://comuboard.com/create-community"
+              href={APP_ROUTES.createCommunity}
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition hover:from-blue-700 hover:to-purple-700 hover:-translate-y-0.5"
             >
               내 커뮤니티 만들기
@@ -95,7 +96,7 @@ export function Hero() {
             </a>
           ) : (
             <a
-              href="https://comuboard.com/signup"
+              href={APP_ROUTES.signup}
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition hover:from-blue-700 hover:to-purple-700 hover:-translate-y-0.5"
             >
               무료로 시작하기

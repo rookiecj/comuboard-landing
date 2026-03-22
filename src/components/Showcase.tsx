@@ -66,7 +66,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
   },
 ];
 
-const API_BASE = "https://comuboard.com";
+import { API_BASE, APP_ROUTES } from "../config";
 
 /**
  * Pick a Lucide icon from community name + description (KO/EN keywords).
@@ -288,7 +288,7 @@ export function Showcase() {
 
       <div className="mt-10 text-center">
         <a
-          href="https://comuboard.com/explore"
+          href={APP_ROUTES.explore}
           className="group inline-flex items-center gap-2 text-base font-bold text-brand-600 dark:text-brand-400 transition hover:text-brand-700 dark:hover:text-brand-300"
         >
           더 많은 커뮤니티 둘러보기

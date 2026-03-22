@@ -1,16 +1,26 @@
-.PHONY: build dev test docker-build fmt
+.PHONY: build run dev test test-quiet docker-build fmt install-deps clean
 
-build:
+build:	## Build for production
 	npm run build
 
-dev:
+run:	## Run dev server
 	npm run dev
 
-test:
+dev: run	## Alias for run
+
+test:	## Type check
 	npx tsc --noEmit
 
-fmt:
+test-quiet: test	## Alias for test
+
+fmt:	## Format source
 	npx prettier --write src/
 
-docker-build:
+docker-build:	## Build Docker image
 	docker build -t comuboard-landing .
+
+install-deps:	## Install dependencies
+	npm ci
+
+clean:	## Clean build output
+	rm -rf dist node_modules

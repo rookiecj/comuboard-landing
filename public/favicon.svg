@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Roof (triangle) -->
+  <polygon points="16,2 2,12 30,12" fill="#5bbcb4"/>
+  <!-- Base bar -->
+  <rect x="2" y="28" width="28" height="2" rx="0.5" fill="#e86c6c"/>
+  <!-- Pillars -->
+  <rect x="5" y="13" width="3.5" height="15" rx="0.8" fill="#6ec88e"/>
+  <rect x="11" y="13" width="3.5" height="15" rx="0.8" fill="#5bbcb4"/>
+  <rect x="17.5" y="13" width="3.5" height="15" rx="0.8" fill="#e86c6c"/>
+  <rect x="23.5" y="13" width="3.5" height="15" rx="0.8" fill="#eab4b4"/>
+</svg>

@@ -9,6 +9,7 @@ export const APP_ROUTES = {
   signupWithPlan: (plan: string) => appUrl(`/register?plan=${plan}`),
   createCommunity: appUrl("/communities/new"),
   explore: appUrl("/explore"),
+  demo: appUrl("/explore"),
   login: appUrl("/login"),
   pricing: appUrl("/pricing"),
 } as const;

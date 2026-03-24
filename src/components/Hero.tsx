@@ -133,6 +133,23 @@ export function Hero() {
             기능 살펴보기
           </a>
         </motion.div>
+
+        {!authenticated && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mt-4 text-center"
+          >
+            <a
+              href={APP_ROUTES.demo}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              데모 커뮤니티 둘러보기
+              <ChevronRight className="h-3.5 w-3.5" />
+            </a>
+          </motion.div>
+        )}
       </div>
     </section>
   );

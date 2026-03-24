@@ -21,6 +21,15 @@ interface Community {
   readonly memberCount: number;
 }
 
+/** Shape returned by GET /api/service-landing → featuredCommunities[] */
+interface ApiFeaturedCommunity {
+  readonly id: string;
+  readonly name: string;
+  readonly slug: string;
+  readonly logo: string | null;
+  readonly memberCount: number;
+}
+
 const MOCK_COMMUNITIES: readonly Community[] = [
   {
     id: "1",
@@ -183,13 +192,20 @@ export function Showcase() {
 
     async function fetchCommunities() {
       try {
-        const res = await fetch(
-          `${API_BASE}/api/service-landing/public-communities?limit=6`,
-        );
+        const res = await fetch(`${API_BASE}/api/service-landing`);
         if (!res.ok) throw new Error("API error");
         const data = await res.json();
-        if (data.data && data.data.length > 0) {
-          setCommunities(data.data);
+        const featured: ApiFeaturedCommunity[] = data.featuredCommunities ?? [];
+        if (featured.length > 0) {
+          setCommunities(
+            featured.map((c) => ({
+              id: c.id,
+              name: c.name,
+              description: "",
+              logoUrl: c.logo,
+              memberCount: c.memberCount,
+            })),
+          );
         } else {
           setCommunities(MOCK_COMMUNITIES);
         }

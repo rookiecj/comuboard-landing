@@ -1,5 +1,5 @@
 // 앱 URL 설정 — Landing에서 comuboard-fe로 연결되는 모든 URL의 base
-// 환경변수 VITE_APP_URL로 설정 가능 (dev: https://app.changju.dev/app/comuboard, prod: https://comuboard.com)
+// 환경변수 VITE_APP_URL로 설정 가능 (dev: https://app.changju.dev/app/comuboard, prod: /app)
 const APP_URL = (import.meta.env.VITE_APP_URL as string) || "";
 
 export const appUrl = (path: string) => `${APP_URL}${path}`;
@@ -9,7 +9,7 @@ export const APP_ROUTES = {
   signupWithPlan: (plan: string) => appUrl(`/register?plan=${plan}`),
   createCommunity: appUrl("/communities/new"),
   explore: appUrl("/explore"),
-  demo: appUrl("/explore"),
+  demo: appUrl("/c/comuboard-users"),
   login: appUrl("/login"),
   pricing: appUrl("/pricing"),
 } as const;

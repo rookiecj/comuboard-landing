@@ -1,29 +1,87 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, ChevronRight } from "lucide-react";
-import { APP_ROUTES } from "../config";
+import { Sparkles, ChevronRight, Loader2 } from "lucide-react";
+import { APP_ROUTES, appUrl } from "../config";
+
+/** Decode a JWT payload without verifying the signature. */
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const payload = atob(parts[1].replace(/-/g, "+").replace(/_/g, "/"));
+    return JSON.parse(payload);
+  } catch {
+    return null;
+  }
+}
+
+/** Check if a JWT token is expired (with 60s buffer). */
+function isTokenExpired(token: string): boolean {
+  const payload = decodeJwtPayload(token);
+  if (!payload || typeof payload.exp !== "number") return true;
+  return payload.exp * 1000 < Date.now() - 60_000;
+}
 
 /**
  * Best-effort auth detection for the landing page.
  * The FE stores auth state in localStorage via zustand persist (key: "auth-storage").
  * When Landing and FE share the same origin (comuboard.com), this works directly.
  * Falls back to checking cookies for backwards compatibility.
+ * Returns the token string if valid, null otherwise.
  */
-function isAuthenticated(): boolean {
-  if (typeof window === "undefined") return false;
+function getValidAuthToken(): string | null {
+  if (typeof window === "undefined") return null;
   try {
     const stored = localStorage.getItem("auth-storage");
     if (stored) {
       const parsed = JSON.parse(stored);
-      if (parsed?.state?.token) return true;
+      const token = parsed?.state?.token;
+      if (token && !isTokenExpired(token)) return token;
     }
   } catch {
     // localStorage may be unavailable or data malformed
   }
-  return document.cookie.split(";").some((c) => c.trim().startsWith("token="));
+  // Cookie fallback — can't check expiry without parsing the cookie token
+  const tokenCookie = document.cookie
+    .split(";")
+    .find((c) => c.trim().startsWith("token="));
+  if (tokenCookie) {
+    const token = tokenCookie.split("=")[1];
+    if (token && !isTokenExpired(token)) return token;
+  }
+  return null;
 }
 
+/** The redirect target for authenticated users. */
+const AUTH_REDIRECT_URL = appUrl("/c/onboarding");
+
 export function Hero() {
-  const authenticated = isAuthenticated();
+  const token = getValidAuthToken();
+  const authenticated = token !== null;
+
+  const [redirecting, setRedirecting] = useState(false);
+
+  useEffect(() => {
+    if (!authenticated) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("no-redirect") === "true") return;
+    setRedirecting(true);
+    const timer = setTimeout(() => {
+      window.location.href = AUTH_REDIRECT_URL;
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [authenticated]);
+
+  if (redirecting) {
+    return (
+      <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-20">
+        <div className="flex flex-col items-center gap-4 text-slate-600 dark:text-slate-300">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <p className="text-sm font-medium">잠시만 기다려주세요...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-20">

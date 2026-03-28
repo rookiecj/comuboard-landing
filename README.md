@@ -23,7 +23,7 @@ ComuBoard 서비스 랜딩 페이지. React + TypeScript + Vite + Tailwind CSS v
 # 의존성 설치
 npm install
 
-# 개발 서버 실행 (http://localhost:5173)
+# 개발 서버 실행 (http://localhost:3001)
 npm run dev
 
 # 프로덕션 빌드

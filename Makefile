@@ -63,10 +63,14 @@ _publish-images:
 	else \
 		docker login $(REGISTRY) 2>/dev/null || { echo "ERROR: registry login failed. Set REGISTRY_USERNAME/REGISTRY_PASSWORD in .env.$(ENV) or run 'docker login $(REGISTRY)' manually."; exit 1; }; \
 	fi
+	@echo "    VITE_APP_URL=$(VITE_APP_URL)"
+	@echo "    VITE_API_URL=$(VITE_API_URL)"
 	@echo "▶ Building $(REGISTRY)/landing:$(IMAGE_TAG)"
 	@docker buildx build \
 		--builder $(BUILDER) \
 		--platform $(PLATFORM) \
+		--build-arg VITE_APP_URL=$(VITE_APP_URL) \
+		--build-arg VITE_API_URL=$(VITE_API_URL) \
 		-t $(REGISTRY)/landing:$(IMAGE_TAG) \
 		-t $(REGISTRY)/landing:$(LATEST_TAG) \
 		--push \

@@ -3,7 +3,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+
+# Landing build args (URL references for CTA links)
+ARG VITE_APP_URL
+ARG VITE_API_URL
+RUN VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=${VITE_API_URL} npm run build
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html

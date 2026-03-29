@@ -5,9 +5,10 @@ RUN npm ci
 COPY . .
 
 # Landing build args (URL references for CTA links)
+ARG VITE_BASE_PATH
 ARG VITE_APP_URL
 ARG VITE_API_URL
-RUN VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=${VITE_API_URL} npm run build
+RUN VITE_BASE_PATH=${VITE_BASE_PATH} VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=${VITE_API_URL} npm run build
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html

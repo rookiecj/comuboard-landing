@@ -237,7 +237,7 @@ export function Showcase() {
         >
           <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 p-2 sm:p-4 backdrop-blur-xl shadow-2xl transition-colors duration-300">
             <img
-              src="/community-gathering.png"
+              src={`${import.meta.env.BASE_URL}community-gathering.png`}
               alt="Community Gathering"
               className="w-full h-auto rounded-xl shadow-[0_0_60px_-15px_rgba(59,130,246,0.2)] dark:shadow-[0_0_60px_-15px_rgba(59,130,246,0.3)] ring-1 ring-slate-900/5 dark:ring-white/10 object-cover bg-white"
             />

@@ -141,12 +141,12 @@ export function Hero() {
           />
 
           <span className="leading-tight">
-            우리의{" "}
+            나만의{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 inline-block">
-              이야기
+              커뮤니티
             </span>
             가 <br className="hidden sm:block" />
-            쌓이는 곳
+            시작되고 성장하는 곳
           </span>
         </motion.h1>
 

@@ -9,8 +9,9 @@ interface CapacityRow {
 }
 
 const capacities: readonly CapacityRow[] = [
-  { label: "커뮤니티", free: "1개", pro: "3개", business: "협의" },
-  { label: "멤버", free: "30명", pro: "300명", business: "협의" },
+  { label: "커뮤니티 생성", free: "불가", pro: "3개", business: "협의" },
+  { label: "커뮤니티 가입", free: "5개", pro: "무제한", business: "무제한" },
+  { label: "멤버/커뮤니티", free: "-", pro: "300명", business: "협의" },
   { label: "스토리지", free: "100 MiB", pro: "5 GiB", business: "협의" },
   { label: "AI 요약", free: "5회/일", pro: "50회/일", business: "협의" },
 ];
@@ -38,7 +39,7 @@ const plans: readonly Plan[] = [
     highlighted: false,
   },
   {
-    name: "Pro",
+    name: "Pro Monthly",
     price: "₩14,950",
     originalPrice: "₩29,900",
     priceUnit: "/월",
@@ -47,6 +48,17 @@ const plans: readonly Plan[] = [
     cta: "Pro 시작하기",
     href: APP_ROUTES.signupWithPlan("pro"),
     highlighted: true,
+  },
+  {
+    name: "Pro Yearly",
+    price: "₩149,500",
+    originalPrice: "₩358,800",
+    priceUnit: "/년",
+    description: "연간 구독 (50% + 2개월 무료)",
+    badge: "50% + 2개월 무료",
+    cta: "Pro 연간 시작하기",
+    href: APP_ROUTES.signupWithPlan("pro-yearly"),
+    highlighted: false,
   },
   {
     name: "Business",

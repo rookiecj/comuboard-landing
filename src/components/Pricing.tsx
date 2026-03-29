@@ -122,9 +122,9 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
 
         <div className="relative mt-8">
           {plan.price !== null ? (
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-baseline gap-1 whitespace-nowrap">
               <span
-                className={`text-4xl font-extrabold tracking-tight ${
+                className={`text-2xl lg:text-3xl font-extrabold tracking-tight ${
                   plan.highlighted
                     ? "bg-linear-to-r from-violet-700 to-indigo-600 bg-clip-text text-transparent dark:from-white dark:to-violet-100"
                     : "text-slate-900 dark:text-white"
@@ -133,13 +133,13 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
                 {plan.price}
               </span>
               {plan.priceUnit && (
-                <span className="text-base font-medium text-slate-500 dark:text-slate-400">
+                <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
                   {plan.priceUnit}
                 </span>
               )}
             </div>
           ) : (
-            <span className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            <span className="text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               Contact
             </span>
           )}

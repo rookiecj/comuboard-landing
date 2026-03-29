@@ -141,12 +141,15 @@ export function Hero() {
           />
 
           <span className="leading-tight">
-            나만의{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 inline-block">
-              커뮤니티
+            나만의 커뮤니티가 <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
+              시작
             </span>
-            가 <br className="hidden sm:block" />
-            시작되고 성장하는 곳
+            되고{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 dark:from-emerald-400 dark:via-teal-400 dark:to-cyan-400">
+              성장
+            </span>
+            하는 곳
           </span>
         </motion.h1>
 

@@ -234,8 +234,8 @@ export function Showcase() {
               id: c.id,
               name: c.name,
               description: c.description ?? "",
-              logoUrl: c.logo,
-              bannerUrl: c.bannerUrl ?? "",
+              logoUrl: c.logo ? `${API_BASE}${c.logo}` : null,
+              bannerUrl: c.bannerUrl ? `${API_BASE}${c.bannerUrl}` : "",
               memberCount: c.memberCount,
             })),
           );

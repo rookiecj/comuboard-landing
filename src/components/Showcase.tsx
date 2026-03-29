@@ -18,6 +18,7 @@ interface Community {
   readonly name: string;
   readonly description: string;
   readonly logoUrl: string | null;
+  readonly bannerUrl: string;
   readonly memberCount: number;
 }
 
@@ -27,6 +28,8 @@ interface ApiFeaturedCommunity {
   readonly name: string;
   readonly slug: string;
   readonly logo: string | null;
+  readonly bannerUrl: string;
+  readonly description: string | null;
   readonly memberCount: number;
 }
 
@@ -36,6 +39,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
     name: "프론트엔드 개발자 모임",
     description: "React, Vue, Svelte 등 기술을 공부하고 트렌드를 공유합니다.",
     logoUrl: null,
+    bannerUrl: "",
     memberCount: 128,
   },
   {
@@ -43,6 +47,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
     name: "오픈소스 컨트리뷰터",
     description: "오픈소스 프로젝트에 기여하고 싶은 개발자들을 위한 커뮤니티.",
     logoUrl: null,
+    bannerUrl: "",
     memberCount: 85,
   },
   {
@@ -50,6 +55,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
     name: "스타트업 빌더스",
     description: "아이디어부터 MVP까지, 창업 과정을 함께 나누는 커뮤니티.",
     logoUrl: null,
+    bannerUrl: "",
     memberCount: 256,
   },
   {
@@ -57,6 +63,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
     name: "독서 토론 클럽",
     description: "매주 한 권의 책을 읽고 깊이 있는 토론을 나눕니다.",
     logoUrl: null,
+    bannerUrl: "",
     memberCount: 64,
   },
   {
@@ -64,6 +71,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
     name: "UX 디자인 연구소",
     description: "사용자 경험 디자인의 실무 사례를 공유하는 커뮤니티.",
     logoUrl: null,
+    bannerUrl: "",
     memberCount: 112,
   },
   {
@@ -71,6 +79,7 @@ const MOCK_COMMUNITIES: readonly Community[] = [
     name: "AI & ML 탐험대",
     description: "머신러닝, LLM 등 최신 AI 논문과 실습을 함께합니다.",
     logoUrl: null,
+    bannerUrl: "",
     memberCount: 198,
   },
 ];
@@ -144,37 +153,60 @@ function getInitialBgColor(name: string): string {
 
 function CommunityCard({ community }: { readonly community: Community }) {
   const Icon = resolveCommunityIcon(community.name, community.description);
+  const hasBanner = !!community.bannerUrl;
 
   return (
-    <div className="flex w-[320px] sm:w-[380px] flex-shrink-0 gap-4 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-800/50 p-6 backdrop-blur-md transition-all hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm dark:shadow-none">
-      {community.logoUrl ? (
-        <img
-          src={community.logoUrl}
-          alt={`${community.name} 로고`}
-          className="h-14 w-14 flex-shrink-0 rounded-xl object-cover ring-1 ring-slate-900/5 dark:ring-white/10"
-        />
-      ) : (
-        <div
-          className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl text-white shadow-inner ring-1 ring-slate-900/5 dark:ring-white/10 ${getInitialBgColor(community.name)}`}
-          aria-hidden
-        >
-          <Icon
-            className="h-7 w-7 shrink-0 opacity-95 drop-shadow-sm"
-            strokeWidth={2}
-          />
-        </div>
+    <div
+      className={`relative flex w-[320px] sm:w-[380px] flex-shrink-0 gap-4 rounded-2xl p-6 transition-all shadow-sm ${
+        hasBanner
+          ? "bg-cover bg-center text-white"
+          : "border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-800/50 backdrop-blur-md hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:border-slate-300 dark:hover:border-slate-600 dark:shadow-none"
+      }`}
+      style={
+        hasBanner
+          ? { backgroundImage: `url(${community.bannerUrl})` }
+          : undefined
+      }
+    >
+      {hasBanner && (
+        <div className="absolute inset-0 rounded-2xl bg-black/40" />
       )}
+      <div className={`relative flex gap-4 ${hasBanner ? "z-10" : ""}`}>
+        {community.logoUrl ? (
+          <img
+            src={community.logoUrl}
+            alt={`${community.name} 로고`}
+            className="h-14 w-14 flex-shrink-0 rounded-xl object-cover ring-1 ring-slate-900/5 dark:ring-white/10"
+          />
+        ) : (
+          <div
+            className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl text-white shadow-inner ring-1 ring-slate-900/5 dark:ring-white/10 ${getInitialBgColor(community.name)}`}
+            aria-hidden
+          >
+            <Icon
+              className="h-7 w-7 shrink-0 opacity-95 drop-shadow-sm"
+              strokeWidth={2}
+            />
+          </div>
+        )}
 
-      <div className="min-w-0 flex-1">
-        <h3 className="truncate text-lg font-semibold text-slate-900 dark:text-white">
-          {community.name}
-        </h3>
-        <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-          {community.description}
-        </p>
-        <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-brand-600 dark:text-brand-400">
-          <Users className="h-4 w-4" />
-          <span>{community.memberCount.toLocaleString()}명 멤버</span>
+        <div className="min-w-0 flex-1">
+          <h3
+            className={`truncate text-lg font-semibold ${hasBanner ? "text-white" : "text-slate-900 dark:text-white"}`}
+          >
+            {community.name}
+          </h3>
+          <p
+            className={`mt-1 line-clamp-2 text-sm leading-relaxed ${hasBanner ? "text-white/80" : "text-slate-600 dark:text-slate-400"}`}
+          >
+            {community.description}
+          </p>
+          <div
+            className={`mt-3 flex items-center gap-1.5 text-xs font-semibold ${hasBanner ? "text-white/70" : "text-brand-600 dark:text-brand-400"}`}
+          >
+            <Users className="h-4 w-4" />
+            <span>{community.memberCount.toLocaleString()}명 멤버</span>
+          </div>
         </div>
       </div>
     </div>
@@ -201,8 +233,9 @@ export function Showcase() {
             featured.map((c) => ({
               id: c.id,
               name: c.name,
-              description: "",
+              description: c.description ?? "",
               logoUrl: c.logo,
+              bannerUrl: c.bannerUrl ?? "",
               memberCount: c.memberCount,
             })),
           );

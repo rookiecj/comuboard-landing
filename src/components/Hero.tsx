@@ -141,7 +141,11 @@ export function Hero() {
           />
 
           <span className="leading-tight">
-            나만의 커뮤니티가 <br className="hidden sm:block" />
+            나만의{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 dark:from-amber-400 dark:via-orange-400 dark:to-rose-400">
+              커뮤니티
+            </span>
+            가 <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
               시작
             </span>

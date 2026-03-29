@@ -71,13 +71,13 @@ const plans: readonly Plan[] = [
 ];
 
 function PlanCard({ plan }: { readonly plan: Plan }) {
-  const padding = plan.badge ? "px-8 pb-8 pt-12" : "p-8";
+  const padding = plan.badge ? "px-6 pb-6 pt-12" : "p-6";
 
   return (
     <div
       className={`relative flex h-full flex-col rounded-3xl transition-all duration-300 ${padding} ${
         plan.highlighted
-          ? "z-10 border-2 border-violet-400/90 bg-linear-to-br from-white via-violet-50/90 to-indigo-50/80 shadow-xl shadow-violet-500/20 ring-4 ring-violet-500/10 dark:border-violet-400/50 dark:from-slate-900 dark:via-violet-950/55 dark:to-indigo-950/45 dark:shadow-violet-500/25 dark:ring-violet-400/15 lg:scale-[1.04] lg:shadow-2xl lg:shadow-violet-500/20"
+          ? "z-10 border-2 border-violet-400/90 bg-linear-to-br from-white via-violet-50/90 to-indigo-50/80 shadow-xl shadow-violet-500/20 ring-4 ring-violet-500/10 dark:border-violet-400/50 dark:from-slate-900 dark:via-violet-950/55 dark:to-indigo-950/45 dark:shadow-violet-500/25 dark:ring-violet-400/15"
           : "border border-slate-200/90 bg-white/90 dark:border-slate-700/60 dark:bg-slate-900/40 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50/90 dark:hover:bg-slate-800/55 shadow-sm dark:shadow-none"
       }`}
     >
@@ -196,18 +196,17 @@ function CapacityTable() {
               <th className="py-5 pl-8 pr-4 text-left font-semibold text-slate-500 dark:text-slate-400">
                 지원 항목
               </th>
-              {plans.map((plan) => (
-                <th
-                  key={plan.name}
-                  className={`px-4 py-5 text-center font-bold text-lg ${
-                    plan.highlighted
-                      ? `${proCol} bg-violet-100/90 dark:bg-violet-950/50 text-violet-800 dark:text-violet-100`
-                      : "text-slate-900 dark:text-white"
-                  }`}
-                >
-                  {plan.name}
-                </th>
-              ))}
+              <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
+                Free
+              </th>
+              <th
+                className={`px-4 py-5 text-center font-bold text-lg ${proCol} bg-violet-100/90 dark:bg-violet-950/50 text-violet-800 dark:text-violet-100`}
+              >
+                Pro
+              </th>
+              <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
+                Business
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -273,7 +272,7 @@ export function Pricing() {
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-3 lg:items-stretch">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
           {plans.map((plan) => (
             <PlanCard key={plan.name} plan={plan} />
           ))}

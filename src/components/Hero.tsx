@@ -156,9 +156,7 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-700 dark:text-slate-300 font-medium"
         >
-          링크 하나, 멘션 하나로 시작하세요.
-          <br className="hidden sm:block" />
-          AI와 자동화가 커뮤니티의 지식으로 다듬어 드립니다.
+          만들고, 모이고, 성장하는 커뮤니티 플랫폼
         </motion.p>
 
         <motion.div

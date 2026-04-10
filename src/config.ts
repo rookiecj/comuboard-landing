@@ -10,7 +10,7 @@ export const APP_ROUTES = {
   createCommunity: appUrl("/communities/new"),
   explore: appUrl("/explore"),
   home: appUrl("/main"),
-  demo: appUrl("/c/onboarding"),
+  demo: appUrl("/c/comuboard"),
   login: appUrl("/login"),
   pricing: appUrl("/pricing"),
 } as const;

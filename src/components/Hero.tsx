@@ -53,7 +53,7 @@ function getValidAuthToken(): string | null {
 }
 
 /** The redirect target for authenticated users. */
-const AUTH_REDIRECT_URL = appUrl("/c/onboarding");
+const AUTH_REDIRECT_URL = appUrl("/main");
 
 export function Hero() {
   const token = getValidAuthToken();

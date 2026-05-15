@@ -9,6 +9,9 @@ interface BusinessInfo {
   ecommerceNumber: string;
   email: string;
   phone: string;
+  hosting?: string;
+  privacyOfficerName?: string;
+  privacyOfficerEmail?: string;
 }
 
 /** Letter colors aligned with `public/logo.png` (roof → pillars → base, left to right). */
@@ -114,10 +117,15 @@ export function Footer() {
               {info.businessNumber && (
                 <span>사업자등록번호: {info.businessNumber}</span>
               )}
-              {info.ecommerceNumber && (
-                <span> | 통신판매업: {info.ecommerceNumber}</span>
-              )}
+              <span> | 통신판매업: {info.ecommerceNumber || "준비 중"}</span>
             </p>
+            {info.hosting && <p>호스팅: {info.hosting}</p>}
+            {info.privacyOfficerName && info.privacyOfficerEmail && (
+              <p>
+                개인정보 보호책임자: {info.privacyOfficerName} (
+                {info.privacyOfficerEmail})
+              </p>
+            )}
             {info.email && <p>고객센터: {info.email}</p>}
           </div>
         )}

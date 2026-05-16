@@ -9,6 +9,12 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   // Dev: /app/comuboard/landing/, Prod: / (VITE_BASE_PATH 환경변수로 제어)
   base: basePath,
+  build: {
+    // STORY-189-03: emit source maps but don't reference them in the bundle.
+    // Manual `sentry-cli releases files upload-sourcemaps dist` for now;
+    // GH Actions automation is a D+14 follow-up.
+    sourcemap: "hidden",
+  },
   server: {
     port: 3001,
     strictPort: true,

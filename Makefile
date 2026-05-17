@@ -66,6 +66,8 @@ _publish-images:
 	@echo "    VITE_BASE_PATH=$(VITE_BASE_PATH)"
 	@echo "    VITE_APP_URL=$(VITE_APP_URL)"
 	@echo "    VITE_API_URL=$(VITE_API_URL)"
+	@echo "    VITE_SENTRY_DSN=$$(echo $(VITE_SENTRY_DSN) | sed 's|\(https://[^@]*\)@.*|\1@***|' || echo '(empty)')"
+	@echo "    VITE_SENTRY_ENV=$(VITE_SENTRY_ENV)"
 	@echo "▶ Building $(REGISTRY)/landing:$(IMAGE_TAG)"
 	@docker buildx build \
 		--builder $(BUILDER) \
@@ -73,6 +75,11 @@ _publish-images:
 		--build-arg VITE_BASE_PATH=$(VITE_BASE_PATH) \
 		--build-arg VITE_APP_URL=$(VITE_APP_URL) \
 		--build-arg VITE_API_URL=$(VITE_API_URL) \
+		--build-arg VITE_SENTRY_DSN=$(VITE_SENTRY_DSN) \
+		--build-arg VITE_SENTRY_ENV=$(VITE_SENTRY_ENV) \
+		--build-arg VITE_SENTRY_RELEASE=$(VITE_SENTRY_RELEASE) \
+		--build-arg VITE_SENTRY_SAMPLE_RATE=$(VITE_SENTRY_SAMPLE_RATE) \
+		--build-arg VITE_SENTRY_TRACES_SAMPLE_RATE=$(VITE_SENTRY_TRACES_SAMPLE_RATE) \
 		-t $(REGISTRY)/landing:$(IMAGE_TAG) \
 		-t $(REGISTRY)/landing:$(LATEST_TAG) \
 		--push \

@@ -13,6 +13,8 @@ export const APP_ROUTES = {
   demo: appUrl("/c/comuboard"),
   login: appUrl("/login"),
   pricing: appUrl("/pricing"),
+  // STORY-178-01: Landing Footer "사업자정보" 링크 → FE /business 페이지 단일 재사용
+  businessInfo: appUrl("/business"),
 } as const;
 
 // API base URL (same origin in prod, configurable for dev)

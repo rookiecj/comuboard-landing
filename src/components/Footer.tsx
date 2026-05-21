@@ -1,18 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import { appUrl, API_BASE } from "../config";
-
-interface BusinessInfo {
-  companyName: string;
-  representative: string;
-  address: string;
-  businessNumber: string;
-  ecommerceNumber: string;
-  email: string;
-  phone: string;
-  hosting?: string;
-  privacyOfficerName?: string;
-  privacyOfficerEmail?: string;
-}
+// guards STORY-178-01: Landing Footer 사업자정보 직접 표시 + fetch 제거 → "사업자정보" 링크로 대체
+// 이전: /api/legal/business-info fetch + 10 필드 직접 렌더
+// 이후: APP_ROUTES.businessInfo (=FE /business) 링크 1줄만 노출 — 페이지 진입 시 fetch
+import { APP_ROUTES, appUrl } from "../config";
 
 /** Letter colors aligned with `public/logo.png` (roof → pillars → base, left to right). */
 const COMUBOARD_LOGO_LETTERS: readonly {
@@ -51,20 +40,6 @@ function ComuBoardWordmark({ className }: { readonly className?: string }) {
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const [info, setInfo] = useState<BusinessInfo | null>(null);
-  const fetchedRef = useRef(false);
-
-  useEffect(() => {
-    if (fetchedRef.current) return;
-    fetchedRef.current = true;
-    fetch(`${API_BASE}/api/legal/business-info`)
-      .then((r) => r.json())
-      .then(setInfo)
-      .catch(() => {});
-  }, []);
-
-  const hasBusinessInfo =
-    info && (info.companyName || info.representative || info.address);
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-12 transition-colors duration-300">
@@ -76,7 +51,7 @@ export function Footer() {
               커뮤니티를 위한 올인원 SaaS 플랫폼
             </p>
           </div>
-          <div className="flex gap-4 text-sm text-slate-500 dark:text-slate-400">
+          <div className="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400 justify-center sm:justify-start">
             <a
               href={appUrl("/terms")}
               className="transition hover:text-brand-500 dark:hover:text-brand-400"
@@ -96,6 +71,12 @@ export function Footer() {
               환불/해지 정책
             </a>
             <a
+              href={APP_ROUTES.businessInfo}
+              className="transition hover:text-brand-500 dark:hover:text-brand-400"
+            >
+              사업자정보
+            </a>
+            <a
               href="mailto:admin@comuboard.com"
               className="font-medium transition hover:text-brand-500 dark:hover:text-brand-400"
             >
@@ -103,32 +84,6 @@ export function Footer() {
             </a>
           </div>
         </div>
-
-        {hasBusinessInfo && (
-          <div className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500 space-y-0.5">
-            <p>
-              {info.companyName && <span>{info.companyName}</span>}
-              {info.representative && (
-                <span> | 대표: {info.representative}</span>
-              )}
-            </p>
-            {info.address && <p>{info.address}</p>}
-            <p>
-              {info.businessNumber && (
-                <span>사업자등록번호: {info.businessNumber}</span>
-              )}
-              <span> | 통신판매업: {info.ecommerceNumber || "준비 중"}</span>
-            </p>
-            {info.hosting && <p>호스팅: {info.hosting}</p>}
-            {info.privacyOfficerName && info.privacyOfficerEmail && (
-              <p>
-                개인정보 보호책임자: {info.privacyOfficerName} (
-                {info.privacyOfficerEmail})
-              </p>
-            )}
-            {info.email && <p>고객센터: {info.email}</p>}
-          </div>
-        )}
 
         <p className="mt-8 text-center text-sm text-slate-400 dark:text-slate-500">
           &copy; {year} ComuBoard. All rights reserved.

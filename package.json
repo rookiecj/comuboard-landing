@@ -8,7 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "sourcemaps:upload": "if [ -z \"$SENTRY_AUTH_TOKEN\" ] || [ -z \"$SENTRY_ORG\" ] || [ -z \"$SENTRY_PROJECT\" ]; then echo 'STORY-186-01: skipping — SENTRY_AUTH_TOKEN / SENTRY_ORG / SENTRY_PROJECT unset'; exit 0; fi && npx @sentry/cli sourcemaps inject ./dist && npx @sentry/cli sourcemaps upload --release=${SENTRY_RELEASE:-$VITE_SENTRY_RELEASE} ./dist",
+    "sourcemaps:clean": "find ./dist -name '*.map' -delete && echo 'STORY-186-01: dist/*.map removed (post-upload cleanup)'",
+    "build:release": "npm run build && npm run sourcemaps:upload && npm run sourcemaps:clean"
   },
   "dependencies": {
     "@sentry/react": "^10.53.1",

@@ -24,7 +24,10 @@ RUN VITE_BASE_PATH=${VITE_BASE_PATH} VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=$
     VITE_SENTRY_TRACES_SAMPLE_RATE=${VITE_SENTRY_TRACES_SAMPLE_RATE} \
     npm run build
 
-FROM nginx:alpine
+# SPRINT-193 BUG-192-01 fix: nginxinc/nginx-unprivileged image swap
+# - uid=101 default + cap_net_bind_service file capability 사전 적용
+# - port 80 → 8080 (Service contract port 80 유지, targetPort 8080)
+FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+EXPOSE 8080

@@ -43,9 +43,9 @@ describe("Footer — STORY-178-01 business info link", () => {
   it("renders without fetching /api/legal/business-info", () => {
     // fetch 가 mocking 안 됐을 때 호출되면 vitest 환경에서는 throw — 부재 자체가 가드
     render(<Footer />);
-    // tagline 가 살아있음을 부재 가드로 사용
+    // tagline 가 살아있음을 부재 가드로 사용 (board-first 리포지셔닝 슬로건)
     expect(
-      screen.getByText(/커뮤니티를 위한 올인원 SaaS 플랫폼/),
+      screen.getByText(/게시판이 필요할 땐, 커뮤보드/),
     ).toBeInTheDocument();
   });
 });

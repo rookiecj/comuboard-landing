@@ -141,19 +141,13 @@ export function Hero() {
           />
 
           <span className="leading-tight">
-            나만의{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 dark:from-amber-400 dark:via-orange-400 dark:to-rose-400">
-              커뮤니티
-            </span>
-            가 <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
-              시작
+              게시판
             </span>
-            되고{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 dark:from-emerald-400 dark:via-teal-400 dark:to-cyan-400">
-              성장
+            이 필요할 땐 <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 dark:from-amber-400 dark:via-orange-400 dark:to-rose-400">
+              커뮤보드
             </span>
-            하는 곳
           </span>
         </motion.h1>
 
@@ -163,7 +157,7 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-700 dark:text-slate-300 font-medium"
         >
-          만들고, 모이고, 성장하는 커뮤니티 플랫폼
+          게시판 하나로 시작해서, 커뮤니티로 자라요.
         </motion.p>
 
         <motion.div
@@ -177,7 +171,7 @@ export function Hero() {
               href={APP_ROUTES.createCommunity}
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition hover:from-blue-700 hover:to-purple-700 hover:-translate-y-0.5"
             >
-              내 커뮤니티 만들기
+              게시판 만들기
               <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
           ) : (

@@ -48,7 +48,7 @@ export function Footer() {
           <div>
             <ComuBoardWordmark className="text-xl" />
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              커뮤니티를 위한 올인원 SaaS 플랫폼
+              게시판이 필요할 땐, 커뮤보드
             </p>
           </div>
           <div className="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400 justify-center sm:justify-start">

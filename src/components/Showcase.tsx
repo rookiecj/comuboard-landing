@@ -3,11 +3,16 @@ import {
   ArrowRight,
   BookOpen,
   BrainCircuit,
+  CalendarCheck,
   Code2,
   Github,
+  GraduationCap,
   LayoutGrid,
+  Megaphone,
+  MessagesSquare,
   Palette,
   Rocket,
+  ShoppingBag,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -36,48 +41,48 @@ interface ApiFeaturedCommunity {
 const MOCK_COMMUNITIES: readonly Community[] = [
   {
     id: "1",
-    name: "프론트엔드 개발자 모임",
-    description: "React, Vue, Svelte 등 기술을 공부하고 트렌드를 공유합니다.",
+    name: "동호회 게시판",
+    description: "일정·공지를 한곳에 모으고, 행사 참석까지 받아요.",
     logoUrl: null,
     bannerUrl: "",
     memberCount: 128,
   },
   {
     id: "2",
-    name: "오픈소스 컨트리뷰터",
-    description: "오픈소스 프로젝트에 기여하고 싶은 개발자들을 위한 커뮤니티.",
+    name: "스터디 Q&A 게시판",
+    description: "궁금한 건 바로 질문하고, 가장 좋은 답변을 채택해요.",
     logoUrl: null,
     bannerUrl: "",
     memberCount: 85,
   },
   {
     id: "3",
-    name: "스타트업 빌더스",
-    description: "아이디어부터 MVP까지, 창업 과정을 함께 나누는 커뮤니티.",
+    name: "수업·과제 게시판",
+    description: "과제를 내고 제출받고 채점까지, 수업 운영이 깔끔해져요.",
     logoUrl: null,
     bannerUrl: "",
     memberCount: 256,
   },
   {
     id: "4",
-    name: "독서 토론 클럽",
-    description: "매주 한 권의 책을 읽고 깊이 있는 토론을 나눕니다.",
+    name: "행사 참석 게시판",
+    description: "날짜·장소·정원을 정하고 참석 신청을 실시간으로 모아요.",
     logoUrl: null,
     bannerUrl: "",
     memberCount: 64,
   },
   {
     id: "5",
-    name: "UX 디자인 연구소",
-    description: "사용자 경험 디자인의 실무 사례를 공유하는 커뮤니티.",
+    name: "중고 장터 게시판",
+    description: "사고팔 물건을 올리고 가격·상태를 한눈에 확인해요.",
     logoUrl: null,
     bannerUrl: "",
     memberCount: 112,
   },
   {
     id: "6",
-    name: "AI & ML 탐험대",
-    description: "머신러닝, LLM 등 최신 AI 논문과 실습을 함께합니다.",
+    name: "공지·필독 게시판",
+    description: "꼭 봐야 할 소식을 필독 배지로 빠짐없이 전해요.",
     logoUrl: null,
     bannerUrl: "",
     memberCount: 198,
@@ -92,6 +97,29 @@ import { API_BASE, APP_ROUTES } from "../config";
  */
 function resolveCommunityIcon(name: string, description: string): LucideIcon {
   const text = `${name} ${description}`.toLowerCase();
+
+  // Use-case board keywords (board-first repositioning) take priority.
+  if (/공지|필독|announcement|notice/.test(text)) {
+    return Megaphone;
+  }
+  if (/행사|참석|이벤트|event|rsvp|모임\s*신청/.test(text)) {
+    return CalendarCheck;
+  }
+  if (/장터|중고|거래|마켓|market|판매|구매/.test(text)) {
+    return ShoppingBag;
+  }
+  if (/수업|과제|클래스|강의|레슨|class|assignment|lesson/.test(text)) {
+    return GraduationCap;
+  }
+  if (/q&a|q\s*&\s*a|질문|답변|qna|문답/.test(text)) {
+    return MessagesSquare;
+  }
+  if (/스터디|study/.test(text)) {
+    return BookOpen;
+  }
+  if (/동호회|동아리|모임|클럽|club|meetup/.test(text)) {
+    return Users;
+  }
 
   if (
     /프론트|react|vue|svelte|angular|next\.?js|frontend|javascript|typescript|웹\s*개발|web\s*dev/.test(
@@ -286,15 +314,15 @@ export function Showcase() {
           className="w-full lg:w-1/2 text-center lg:text-left"
         >
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
-            활발하게 성장 중인 <br className="hidden lg:block" />
+            필요한 게시판이 <br className="hidden lg:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">
-              커뮤니티
+              다 있어요
             </span>
           </h2>
           <p className="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            개발, 디자인, 스타트업 등 <br className="hidden sm:block" />
-            다양한 관심사를 가진 사람들이 모여 이미 ComuBoard에서 폭넓은
-            이야기와 지식을 쌓아가고 있습니다.
+            동호회 공지부터 스터디 Q&amp;A, 수업 과제, 행사 참석, 중고 장터까지.{" "}
+            <br className="hidden sm:block" />
+            용도에 맞는 게시판을 5분 만에 만들고, 쓰다 보면 커뮤니티로 자라요.
           </p>
         </motion.div>
       </div>
@@ -340,7 +368,7 @@ export function Showcase() {
           href={APP_ROUTES.explore}
           className="group inline-flex items-center gap-2 text-base font-bold text-brand-600 dark:text-brand-400 transition hover:text-brand-700 dark:hover:text-brand-300"
         >
-          더 많은 커뮤니티 둘러보기
+          더 많은 게시판 둘러보기
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </a>
       </div>

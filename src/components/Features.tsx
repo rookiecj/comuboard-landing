@@ -39,7 +39,7 @@ interface Pillar {
 const pillars: Pillar[] = [
   {
     label: "모으다",
-    tagline: "이야기를 꺼내다",
+    tagline: "글이 쉽게 올라오는 게시판",
     color: "text-emerald-600 dark:text-emerald-400",
     bg: "bg-emerald-100 dark:bg-emerald-500/10",
     border: "border-emerald-200 dark:border-emerald-500/20",
@@ -71,7 +71,7 @@ const pillars: Pillar[] = [
   },
   {
     label: "다듬다",
-    tagline: "이야기가 깊어지다",
+    tagline: "좋은 글이 위로 올라오는 게시판",
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-100 dark:bg-blue-500/10",
     border: "border-blue-200 dark:border-blue-500/20",
@@ -104,7 +104,7 @@ const pillars: Pillar[] = [
   },
   {
     label: "나누다",
-    tagline: "이야기가 퍼지다",
+    tagline: "밖으로 퍼지는 게시판",
     color: "text-purple-600 dark:text-purple-400",
     bg: "bg-purple-100 dark:bg-purple-500/10",
     border: "border-purple-200 dark:border-purple-500/20",
@@ -238,15 +238,15 @@ export function Features() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center mb-20">
             <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-              커뮤니티가 자라나는{" "}
+              좋은 게시판이 하는{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500 font-extrabold">
                 3가지
               </span>{" "}
-              축
+              일
             </h2>
             <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-              애써 글을 쓰지 않아도 알아서 모이고, AI가 핵심만 남기며, 널리
-              공유됩니다.
+              좋은 게시판은 이야기를 모으고, 다듬고, 나눠요. 그릇이 좋으면
+              커뮤니티가 자라요.
             </p>
           </div>
 

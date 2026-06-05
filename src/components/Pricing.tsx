@@ -9,9 +9,9 @@ interface CapacityRow {
 }
 
 const capacities: readonly CapacityRow[] = [
-  { label: "게시판 만들기", free: "불가", pro: "3개", business: "협의" },
-  { label: "게시판 참여", free: "5개", pro: "무제한", business: "무제한" },
-  { label: "게시판당 멤버", free: "-", pro: "300명", business: "협의" },
+  { label: "공간 만들기", free: "불가", pro: "3개", business: "협의" },
+  { label: "공간 참여", free: "5개", pro: "무제한", business: "무제한" },
+  { label: "공간당 멤버", free: "-", pro: "300명", business: "협의" },
   {
     label: "글 작성·댓글·투표",
     free: "무제한",

@@ -171,7 +171,7 @@ export function Hero() {
               href={APP_ROUTES.createCommunity}
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition hover:from-blue-700 hover:to-purple-700 hover:-translate-y-0.5"
             >
-              게시판 만들기
+              공간 만들기
               <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
           ) : (
@@ -202,7 +202,7 @@ export function Hero() {
               href={APP_ROUTES.demo}
               className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              온보딩 커뮤니티 바로가기
+              온보딩 공간 바로가기
               <ChevronRight className="h-3.5 w-3.5" />
             </a>
           </motion.div>

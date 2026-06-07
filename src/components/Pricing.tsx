@@ -9,7 +9,7 @@ interface CapacityRow {
 }
 
 const capacities: readonly CapacityRow[] = [
-  { label: "공간 만들기", free: "불가", pro: "3개", business: "협의" },
+  { label: "공간 만들기", free: "참여 전용", pro: "3개", business: "협의" },
   { label: "공간 참여", free: "5개", pro: "무제한", business: "무제한" },
   { label: "공간당 멤버", free: "-", pro: "300명", business: "협의" },
   {
@@ -163,7 +163,7 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
               : "bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300"
           }`}
         >
-          모든 기능 동일 — 용량만 다릅니다
+          모든 기능은 그대로, 용량만 달라요
         </div>
 
         <div className="min-h-0 flex-1" aria-hidden />
@@ -272,9 +272,9 @@ export function Pricing() {
             합리적인 요금제
           </h2>
           <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-            모든 플랜에서 커뮤보드의 강력한 핵심 기능을 경험할 수 있습니다.
+            모든 플랜에서 커뮤보드의 강력한 핵심 기능을 경험할 수 있어요.
             <br className="hidden sm:block" />
-            필요한 용량에 맞게 선택하세요.
+            필요한 용량에 맞게 골라보세요.
           </p>
         </div>
 

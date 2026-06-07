@@ -322,7 +322,8 @@ export function Showcase() {
           <p className="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
             동호회 공지부터 스터디 Q&amp;A, 수업 과제, 행사 참석, 중고 장터까지.{" "}
             <br className="hidden sm:block" />
-            용도에 맞는 게시판을 5분 만에 만들고, 쓰다 보면 커뮤니티로 자라요.
+            용도에 맞는 게시판을 코드 없이 바로 만들고, 쓰다 보면 커뮤니티로
+            자라요.
           </p>
         </motion.div>
       </div>

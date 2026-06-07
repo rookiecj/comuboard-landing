@@ -14,6 +14,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Hero } from "./components/Hero";
 import { Features } from "./components/Features";
+import { AIAssist } from "./components/AIAssist";
 import { Showcase } from "./components/Showcase";
 import { Pricing } from "./components/Pricing";
 import { Footer } from "./components/Footer";
@@ -25,6 +26,7 @@ function LandingHome() {
       <Hero />
       <Showcase />
       <Features />
+      <AIAssist />
       <Pricing />
       <Footer />
     </>

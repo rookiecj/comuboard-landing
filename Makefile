@@ -56,6 +56,7 @@ _publish-images:
 	$(eval include .env.$(ENV))
 	$(eval IMAGE_TAG := $(if $(filter dev,$(ENV)),dev-$(VERSION),$(VERSION)))
 	$(eval LATEST_TAG := $(if $(filter dev,$(ENV)),dev-latest,latest))
+	$(eval VITE_APP_ENV := $(if $(VITE_APP_ENV),$(VITE_APP_ENV),$(if $(filter dev,$(ENV)),staging,production)))
 	@echo "=== Landing publish-$(ENV) v$(IMAGE_TAG) ($(GIT_COMMIT)) ==="
 	@echo "--- Registry login ---"
 	@if [ -n "$(REGISTRY_USERNAME)" ] && [ -n "$(REGISTRY_PASSWORD)" ]; then \
@@ -66,6 +67,7 @@ _publish-images:
 	@echo "    VITE_BASE_PATH=$(VITE_BASE_PATH)"
 	@echo "    VITE_APP_URL=$(VITE_APP_URL)"
 	@echo "    VITE_API_URL=$(VITE_API_URL)"
+	@echo "    VITE_APP_ENV=$(VITE_APP_ENV)"
 	@echo "    VITE_SENTRY_DSN=$$(echo $(VITE_SENTRY_DSN) | sed 's|\(https://[^@]*\)@.*|\1@***|' || echo '(empty)')"
 	@echo "    VITE_SENTRY_ENV=$(VITE_SENTRY_ENV)"
 	@echo "▶ Building $(REGISTRY)/landing:$(IMAGE_TAG)"
@@ -75,6 +77,7 @@ _publish-images:
 		--build-arg VITE_BASE_PATH=$(VITE_BASE_PATH) \
 		--build-arg VITE_APP_URL=$(VITE_APP_URL) \
 		--build-arg VITE_API_URL=$(VITE_API_URL) \
+		--build-arg VITE_APP_ENV=$(VITE_APP_ENV) \
 		--build-arg VITE_SENTRY_DSN=$(VITE_SENTRY_DSN) \
 		--build-arg VITE_SENTRY_ENV=$(VITE_SENTRY_ENV) \
 		--build-arg VITE_SENTRY_RELEASE=$(VITE_SENTRY_RELEASE) \

@@ -8,6 +8,9 @@ COPY . .
 ARG VITE_BASE_PATH
 ARG VITE_APP_URL
 ARG VITE_API_URL
+# Runtime environment indicator (development | staging | production) for the
+# top-right EnvBadge. Empty default → src/config.ts falls back to DEV.
+ARG VITE_APP_ENV=
 # BUG-189-01: Sentry build ARGs — Vite inlines import.meta.env.VITE_* at
 # build time. Empty defaults are intentional — empty DSN triggers no-op
 # init in src/sentry.ts (silent without Sentry).
@@ -17,6 +20,7 @@ ARG VITE_SENTRY_RELEASE=
 ARG VITE_SENTRY_SAMPLE_RATE=1.0
 ARG VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 RUN VITE_BASE_PATH=${VITE_BASE_PATH} VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=${VITE_API_URL} \
+    VITE_APP_ENV=${VITE_APP_ENV} \
     VITE_SENTRY_DSN=${VITE_SENTRY_DSN} \
     VITE_SENTRY_ENV=${VITE_SENTRY_ENV} \
     VITE_SENTRY_RELEASE=${VITE_SENTRY_RELEASE} \

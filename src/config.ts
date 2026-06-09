@@ -20,3 +20,35 @@ export const APP_ROUTES = {
 // API base URL (same origin in prod, configurable for dev)
 export const API_BASE =
   (import.meta.env.VITE_API_URL as string) || APP_URL || "";
+
+/**
+ * Runtime application environment.
+ *
+ * - "development": local Vite dev server (`npm run dev`).
+ * - "staging": the dev cluster deployment.
+ * - "production": the production deployment (comuboard.com).
+ *
+ * The primary signal is the build-time `VITE_APP_ENV` (injected per GitHub
+ * environment: homelab-staging → staging, homelab-prod → production). When it
+ * is absent we fall back to `import.meta.env.DEV` so the local dev server is
+ * still flagged; deployed builds without the var resolve to "production".
+ */
+export type AppEnv = "development" | "staging" | "production";
+
+export function getAppEnv(env: ImportMetaEnv = import.meta.env): AppEnv {
+  const explicit = String(env.VITE_APP_ENV ?? "").toLowerCase();
+  if (
+    explicit === "development" ||
+    explicit === "staging" ||
+    explicit === "production"
+  ) {
+    return explicit;
+  }
+  if (env.DEV) return "development";
+  return "production";
+}
+
+/** True only on the production deployment (comuboard.com). */
+export function isProductionEnv(env?: ImportMetaEnv): boolean {
+  return getAppEnv(env) === "production";
+}

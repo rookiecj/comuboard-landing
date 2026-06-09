@@ -36,7 +36,7 @@ describe("getAppEnv (Landing)", () => {
     expect(isProductionEnv(env({ DEV: false }))).toBe(true);
   });
 
-  // guards SPRINT-269 Security R2: Landing has no base-path fallback, so a
+  // guards SPRINT-271 Security R2: Landing has no base-path fallback, so a
   // deployed build without VITE_APP_ENV resolves to production (badge hidden)
   // even on a non-root base path. This is why homelab-staging MUST set
   // VITE_APP_ENV=staging for the dev badge to appear (R1).
@@ -46,7 +46,7 @@ describe("getAppEnv (Landing)", () => {
     ).toBe("production");
   });
 
-  // guards SPRINT-269 Security R2: explicit production wins over any base path.
+  // guards SPRINT-271 Security R2: explicit production wins over any base path.
   it("explicit production wins over a non-root base path", () => {
     expect(
       getAppEnv(

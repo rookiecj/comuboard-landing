@@ -13,6 +13,7 @@
 // basename 으로 stripping 한 path 를 매칭한다.
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Hero } from "./components/Hero";
+import { DomainPacks } from "./components/DomainPacks";
 import { Features } from "./components/Features";
 import { AIAssist } from "./components/AIAssist";
 import { Showcase } from "./components/Showcase";
@@ -25,6 +26,7 @@ function LandingHome() {
   return (
     <>
       <Hero />
+      <DomainPacks />
       <Showcase />
       <Features />
       <AIAssist />

@@ -17,7 +17,6 @@ import { DomainPacks } from "./components/DomainPacks";
 import { Features } from "./components/Features";
 import { AIAssist } from "./components/AIAssist";
 import { Showcase } from "./components/Showcase";
-import { PersonalStudioCTA } from "./components/PersonalStudioCTA";
 import { Pricing } from "./components/Pricing";
 import { Footer } from "./components/Footer";
 import { EnvBadge } from "./components/EnvBadge";
@@ -28,7 +27,6 @@ function LandingHome() {
     <>
       <Hero />
       <Showcase />
-      <PersonalStudioCTA />
       <DomainPacks />
       <Features />
       <AIAssist />

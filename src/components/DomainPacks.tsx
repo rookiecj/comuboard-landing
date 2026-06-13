@@ -12,6 +12,7 @@ import {
   GraduationCap,
   BookOpen,
   Dumbbell,
+  NotebookPen,
   type LucideIcon,
 } from "lucide-react";
 import { appUrl } from "../config";
@@ -32,7 +33,7 @@ export interface DomainPack {
   readonly differentiator: string;
 }
 
-// 표시 순서: 동호회 → 교회 → 학교 → 스터디 → 스포츠
+// 표시 순서: 동호회 → 교회 → 학교 → 스터디 → 스포츠 → 나의 작업실(개인)
 export const DOMAIN_PACKS: readonly DomainPack[] = [
   {
     key: "hobby-club",
@@ -91,6 +92,27 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     value: "출석·회비·경기 기록·라인업 편성을 한 번에 챙겨요.",
     boards: ["출석", "회비", "경기", "라인업", "공지"],
     differentiator: "경기 기록·라인업 편성까지",
+  },
+  {
+    key: "personal-studio",
+    emoji: "📓",
+    icon: NotebookPen,
+    label: "나의 작업실",
+    persona: "혼자 쓰세요?",
+    value:
+      "메모·할 일·가계부·습관을 나만의 작업실에 모으고, 고른 글만 살며시 공개하면 작은 블로그가 돼요.",
+    boards: [
+      "메모",
+      "할 일",
+      "저널",
+      "북마크",
+      "자료실",
+      "컬렉션",
+      "위시리스트",
+      "가계부",
+      "습관",
+    ],
+    differentiator: "고른 글만 공개하는 디지털 가든 — 개인 블로그·포트폴리오로",
   },
 ] as const;
 

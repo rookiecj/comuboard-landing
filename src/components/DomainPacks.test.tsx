@@ -1,11 +1,11 @@
 // STORY-284-01 (SPRINT-287): DomainPacks 통합 렌더 테스트.
-// 5팩 탭, 팩별 보드칩 개수(7/7/6/6/5), CTA href 의 `?pack=` registry key,
-// 탭 전환 시 활성 카드 변경을 단언한다.
+// 6팩 탭(운영자 5 + 나의 작업실), 팩별 보드칩 개수(7/7/6/6/5/9),
+// CTA href 의 `?pack=` registry key, 탭 전환 시 활성 카드 변경을 단언한다.
 import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { DomainPacks, DOMAIN_PACKS } from "./DomainPacks";
 
-describe("DomainPacks — 운영자 5팩 도메인 팩 섹션", () => {
+describe("DomainPacks — 도메인 팩 섹션(운영자 5 + 나의 작업실)", () => {
   afterEach(() => {
     cleanup();
   });
@@ -18,22 +18,23 @@ describe("DomainPacks — 운영자 5팩 도메인 팩 섹션", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders all 5 pack tabs in display order", () => {
+  it("renders all 6 pack tabs in display order", () => {
     render(<DomainPacks />);
     const tabs = screen.getAllByRole("tab");
-    expect(tabs).toHaveLength(5);
+    expect(tabs).toHaveLength(6);
     expect(tabs.map((t) => t.textContent?.trim())).toEqual([
       "🎯동호회",
       "⛪교회",
       "🎓학교/학원",
       "📚스터디",
       "⚽스포츠",
+      "📓나의 작업실",
     ]);
   });
 
-  it("pack data board counts match registry (7/7/6/6/5)", () => {
+  it("pack data board counts match registry (7/7/6/6/5/9)", () => {
     const counts = DOMAIN_PACKS.map((p) => p.boards.length);
-    expect(counts).toEqual([7, 7, 6, 6, 5]);
+    expect(counts).toEqual([7, 7, 6, 6, 5, 9]);
     // key 정합 (위저드 ?pack= 계약)
     expect(DOMAIN_PACKS.map((p) => p.key)).toEqual([
       "hobby-club",
@@ -41,6 +42,7 @@ describe("DomainPacks — 운영자 5팩 도메인 팩 섹션", () => {
       "school-operations",
       "study-group",
       "sports-club",
+      "personal-studio",
     ]);
   });
 

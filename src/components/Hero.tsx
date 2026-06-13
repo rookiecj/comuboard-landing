@@ -184,7 +184,7 @@ export function Hero() {
             </a>
           )}
           <a
-            href="#features"
+            href="#domain-packs"
             className="inline-flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 px-8 py-4 text-base font-bold text-slate-900 dark:text-white backdrop-blur-sm transition hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-600 hover:-translate-y-0.5"
           >
             기능 살펴보기

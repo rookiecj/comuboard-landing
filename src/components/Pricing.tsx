@@ -9,9 +9,9 @@ interface CapacityRow {
 }
 
 const capacities: readonly CapacityRow[] = [
-  { label: "공간 만들기", free: "참여 전용", pro: "3개", business: "협의" },
+  { label: "공간 만들기", free: "1개", pro: "3개", business: "협의" },
   { label: "공간 참여", free: "5개", pro: "무제한", business: "무제한" },
-  { label: "공간당 멤버", free: "-", pro: "300명", business: "협의" },
+  { label: "공간당 멤버", free: "10명", pro: "300명", business: "협의" },
   {
     label: "글 작성·댓글·투표",
     free: "무제한",
@@ -19,7 +19,12 @@ const capacities: readonly CapacityRow[] = [
     business: "무제한",
   },
   { label: "스토리지", free: "100 MiB", pro: "5 GiB", business: "협의" },
-  { label: "AI 요약", free: "5회/일", pro: "50회/일", business: "협의" },
+  {
+    label: "AI 요약",
+    free: "내 키 연결 시 무제한",
+    pro: "50회/일",
+    business: "협의",
+  },
 ];
 
 interface Plan {

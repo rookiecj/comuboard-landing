@@ -3,7 +3,7 @@
 // 레버를 landing 에 적용. 운영자 5팩(동호회/교회/학교/스터디/스포츠)을 탭으로
 // 전환하며, 각 팩 카드에 페르소나 후크 + 보드칩(registry 정합) + 차별화 한 줄 +
 // `?pack={registry-key}` 딥링크 CTA 를 노출한다. Hero 직후 삽입.
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -180,6 +180,20 @@ export function DomainPacks() {
   const activePack =
     DOMAIN_PACKS.find((p) => p.key === activeKey) ?? DOMAIN_PACKS[0];
 
+  // 모바일 가로 스크롤 카드 ref — 탭 선택 시 해당 카드를 보이도록 스크롤.
+  // 데스크탑은 카드 리스트가 `sm:hidden`(display:none)이라 scrollIntoView no-op
+  // (데스크탑은 AnimatePresence 활성 카드가 제자리에 항상 노출).
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const handleSelect = (key: string) => {
+    setActiveKey(key);
+    cardRefs.current[key]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  };
+
   return (
     <section
       id="domain-packs"
@@ -214,7 +228,7 @@ export function DomainPacks() {
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => setActiveKey(pack.key)}
+                onClick={() => handleSelect(pack.key)}
                 className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${
                   isActive
                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-[0_0_24px_-10px_rgba(59,130,246,0.6)]"
@@ -250,6 +264,9 @@ export function DomainPacks() {
             {DOMAIN_PACKS.map((pack) => (
               <div
                 key={pack.key}
+                ref={(el) => {
+                  cardRefs.current[pack.key] = el;
+                }}
                 className="w-[85vw] max-w-xs flex-shrink-0 snap-center"
               >
                 <PackCard pack={pack} />

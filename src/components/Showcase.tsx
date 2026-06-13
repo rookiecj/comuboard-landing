@@ -417,7 +417,7 @@ export function Showcase() {
 
       <div className="mt-10 text-center">
         <a
-          href={APP_ROUTES.explore}
+          href={APP_ROUTES.boards}
           className="group inline-flex items-center gap-2 text-base font-bold text-brand-600 dark:text-brand-400 transition hover:text-brand-700 dark:hover:text-brand-300"
         >
           더 많은 게시판 둘러보기

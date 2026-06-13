@@ -9,6 +9,8 @@ export const APP_ROUTES = {
   signupWithPlan: (plan: string) => appUrl(`/register?plan=${plan}`),
   createCommunity: appUrl("/communities/new"),
   explore: appUrl("/explore"),
+  // STORY-285-02: "더 많은 게시판 둘러보기" → FE /boards 게시판 카탈로그 페이지
+  boards: appUrl("/boards"),
   home: appUrl("/main"),
   demo: appUrl("/c/comuboard"),
   login: appUrl("/login"),

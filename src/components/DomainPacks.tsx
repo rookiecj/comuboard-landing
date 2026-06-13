@@ -33,7 +33,7 @@ export interface DomainPack {
   readonly differentiator: string;
 }
 
-// 표시 순서: 동호회 → 교회 → 학교 → 스터디 → 스포츠 → 나의 작업실(개인)
+// 표시 순서: 동호회 → 학교 → 스터디 → 스포츠 → 나의 작업실(개인) → 교회(마지막)
 export const DOMAIN_PACKS: readonly DomainPack[] = [
   {
     key: "hobby-club",
@@ -44,24 +44,6 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     value: "회비·출석·정모 신청을 한곳에 모아 모임 운영이 한결 가벼워져요.",
     boards: ["회비", "N빵", "출석", "정모/번개", "갤러리", "공지", "자유"],
     differentiator: "회비 납부 현황을 회차별로 한눈에 · 번개는 1탭 참석",
-  },
-  {
-    key: "church-operations",
-    emoji: "⛪",
-    icon: Church,
-    label: "교회",
-    persona: "교회 운영, 흩어진 일을 한곳에",
-    value: "출석·헌금·주보·봉사 편성까지 교회 살림을 한 공간에서 챙겨요.",
-    boards: [
-      "출석",
-      "헌금장부",
-      "공지",
-      "행사",
-      "주보",
-      "중보기도",
-      "봉사편성",
-    ],
-    differentiator: "주보 발행부터 봉사 편성·중보기도까지",
   },
   {
     key: "school-operations",
@@ -113,6 +95,24 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
       "습관",
     ],
     differentiator: "고른 글만 공개하는 디지털 가든 — 개인 블로그·포트폴리오로",
+  },
+  {
+    key: "church-operations",
+    emoji: "⛪",
+    icon: Church,
+    label: "교회",
+    persona: "교회 운영, 흩어진 일을 한곳에",
+    value: "출석·헌금·주보·봉사 편성까지 교회 살림을 한 공간에서 챙겨요.",
+    boards: [
+      "출석",
+      "헌금장부",
+      "공지",
+      "행사",
+      "주보",
+      "중보기도",
+      "봉사편성",
+    ],
+    differentiator: "주보 발행부터 봉사 편성·중보기도까지",
   },
 ] as const;
 

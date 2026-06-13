@@ -27,9 +27,9 @@ function LandingHome() {
   return (
     <>
       <Hero />
-      <DomainPacks />
       <Showcase />
       <PersonalStudioCTA />
+      <DomainPacks />
       <Features />
       <AIAssist />
       <Pricing />

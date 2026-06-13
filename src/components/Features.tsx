@@ -15,6 +15,7 @@ import {
   PenTool,
   Workflow,
   ShieldCheck,
+  ScanEye,
   Presentation,
   ChevronDown,
   PenLine,
@@ -121,6 +122,16 @@ const bentoFeatures: BentoItem[] = [
     bgBlob: "bg-pink-500/10 group-hover:bg-pink-500/20",
   },
   // 몰입을 돕는 도구
+  {
+    title: "화면을 이해하는 AI 도우미",
+    description:
+      "지금 보고 있는 화면(글·게시판·공간)을 이해해, 긴 글을 요약하고 다음 할 일을 먼저 제안합니다.",
+    detail:
+      "AI 도우미가 현재 화면과 내 역할을 파악해 맥락에 맞게 답합니다. 긴 글이나 게시판은 핵심만 요약하고, 화면마다 '여기서 할 수 있는 행동'을 제안 칩으로 먼저 안내해 한 번에 시작할 수 있습니다.",
+    icon: ScanEye,
+    color: "text-violet-500 dark:text-violet-400",
+    bgBlob: "bg-violet-500/10 group-hover:bg-violet-500/20",
+  },
   {
     title: "완벽한 몰입, Zen 모드",
     description:

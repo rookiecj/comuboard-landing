@@ -163,6 +163,47 @@ function resolveCommunityIcon(name: string, description: string): LucideIcon {
   return Users;
 }
 
+/**
+ * Derive 2~3 capability tags (Korean function labels) from community
+ * name + description. Replaces the member-count badge on landing use-case
+ * cards: the Showcase sells "what board you can build" (게시판 후크), so a
+ * use-case/capability signal reinforces the board-first framing better than
+ * a scale signal (멤버수 = 규모/커뮤니티 신호 — brand-positioning §7 원칙 2,
+ * 로비에서 노출). Keyword map mirrors resolveCommunityIcon.
+ */
+function resolveCapabilityTags(name: string, description: string): string[] {
+  const text = `${name} ${description}`.toLowerCase();
+
+  if (/공지|필독|announcement|notice/.test(text)) {
+    return ["공지", "필독", "읽음 확인"];
+  }
+  if (/행사|참석|이벤트|event|rsvp|모임\s*신청/.test(text)) {
+    return ["일정", "장소·정원", "참석 신청"];
+  }
+  if (/장터|중고|거래|마켓|market|판매|구매/.test(text)) {
+    return ["가격", "상태", "거래"];
+  }
+  if (/수업|과제|클래스|강의|레슨|class|assignment|lesson/.test(text)) {
+    return ["과제", "제출", "채점"];
+  }
+  if (/q&a|q\s*&\s*a|질문|답변|qna|문답/.test(text)) {
+    return ["질문", "답변", "채택"];
+  }
+  if (/스터디|study/.test(text)) {
+    return ["진도", "자료실", "Q&A"];
+  }
+  if (/동호회|동아리|모임|클럽|club|meetup/.test(text)) {
+    return ["회비", "일정", "갤러리"];
+  }
+  if (/투표|설문|poll|vote/.test(text)) {
+    return ["선택지", "마감", "결과 차트"];
+  }
+  if (/갤러리|사진|작품|gallery|이미지/.test(text)) {
+    return ["썸네일", "캡션", "그리드"];
+  }
+  return ["글쓰기", "댓글", "공유"];
+}
+
 function getInitialBgColor(name: string): string {
   const colors = [
     "bg-indigo-500",
@@ -229,11 +270,21 @@ function CommunityCard({ community }: { readonly community: Community }) {
           >
             {community.description}
           </p>
-          <div
-            className={`mt-3 flex items-center gap-1.5 text-xs font-semibold ${hasBanner ? "text-white/70" : "text-brand-600 dark:text-brand-400"}`}
-          >
-            <Users className="h-4 w-4" />
-            <span>{community.memberCount.toLocaleString()}명 멤버</span>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {resolveCapabilityTags(community.name, community.description).map(
+              (tag) => (
+                <span
+                  key={tag}
+                  className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                    hasBanner
+                      ? "bg-white/20 text-white/90"
+                      : "bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300"
+                  }`}
+                >
+                  {tag}
+                </span>
+              ),
+            )}
           </div>
         </div>
       </div>

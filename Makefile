@@ -96,8 +96,12 @@ publish-dev:	## Validate, tag, build ARM64 image for dev (dev-v{VERSION})
 	@echo "=== Landing: publish-dev v$(VERSION) ==="
 	@echo "--- build ---"
 	$(MAKE) build
-	@echo "--- test(quiet) ---"
-	$(MAKE) test-quiet
+	@if [ "$(FAST)" = "1" ]; then \
+		echo "--- test(quiet) SKIPPED (FAST=1) ---"; \
+	else \
+		echo "--- test(quiet) ---"; \
+		$(MAKE) test-quiet; \
+	fi
 	@echo "--- Tagging dev-v$(VERSION) ---"
 	@git fetch origin --tags
 	@if git rev-parse "dev-v$(VERSION)" >/dev/null 2>&1; then \

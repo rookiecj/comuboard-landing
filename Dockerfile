@@ -1,7 +1,7 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN --mount=type=cache,target=/root/.npm npm ci
 COPY . .
 
 # Landing build args (URL references for CTA links)
@@ -19,7 +19,9 @@ ARG VITE_SENTRY_ENV=production
 ARG VITE_SENTRY_RELEASE=
 ARG VITE_SENTRY_SAMPLE_RATE=1.0
 ARG VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
-RUN VITE_BASE_PATH=${VITE_BASE_PATH} VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=${VITE_API_URL} \
+RUN --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,target=/app/node_modules/.vite \
+    VITE_BASE_PATH=${VITE_BASE_PATH} VITE_APP_URL=${VITE_APP_URL} VITE_API_URL=${VITE_API_URL} \
     VITE_APP_ENV=${VITE_APP_ENV} \
     VITE_SENTRY_DSN=${VITE_SENTRY_DSN} \
     VITE_SENTRY_ENV=${VITE_SENTRY_ENV} \

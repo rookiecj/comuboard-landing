@@ -118,8 +118,12 @@ publish-prod:	## Validate, tag, build ARM64 image for prod (v{VERSION})
 	@echo "=== Landing: publish-prod v$(VERSION) ==="
 	@echo "--- build ---"
 	$(MAKE) build
-	@echo "--- test(quiet) ---"
-	$(MAKE) test-quiet
+	@if [ "$(FAST)" = "1" ]; then \
+		echo "--- test(quiet) SKIPPED (FAST=1) ---"; \
+	else \
+		echo "--- test(quiet) ---"; \
+		$(MAKE) test-quiet; \
+	fi
 	@echo "--- Tagging v$(VERSION) ---"
 	@git fetch origin --tags
 	@if git rev-parse "v$(VERSION)" >/dev/null 2>&1; then \

@@ -56,7 +56,7 @@ const capacities: readonly CapacityRow[] = [
     business: "협의",
   },
   {
-    label: "AI 요약",
+    label: "AI 사용",
     free: "내 키 연결 시 무제한",
     starter: "20회/일",
     pro: "100회/일",

@@ -76,12 +76,6 @@ export function Footer() {
             >
               사업자정보
             </a>
-            <a
-              href="mailto:admin@comuboard.com"
-              className="font-medium transition hover:text-brand-500 dark:hover:text-brand-400"
-            >
-              Contact
-            </a>
           </div>
         </div>
 

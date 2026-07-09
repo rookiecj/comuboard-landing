@@ -93,9 +93,11 @@ const plans: readonly Plan[] = [
     name: "Starter",
     getPrice: (cycle) =>
       cycle === "yearly"
-        ? { price: "₩70,000", originalPrice: "₩84,000", unit: "/년" }
-        : { price: "₩7,000", unit: "/월" },
+        ? { price: "₩70,000", originalPrice: "₩168,000", unit: "/년" }
+        : { price: "₩7,000", originalPrice: "₩14,000", unit: "/월" },
     description: "개인·소규모 커뮤니티 운영",
+    getBadge: (cycle) =>
+      cycle === "yearly" ? "50% + 2개월 무료" : "50% 프로모션",
     cta: "Starter 시작하기",
     getHref: (cycle) =>
       APP_ROUTES.signupWithPlan(

@@ -1,88 +1,189 @@
+import { useState } from "react";
 import { Check, Star, ChevronRight } from "lucide-react";
 import { APP_ROUTES } from "../config";
+
+type BillingCycle = "monthly" | "yearly";
 
 interface CapacityRow {
   readonly label: string;
   readonly free: string;
+  readonly starter: string;
   readonly pro: string;
   readonly business: string;
 }
 
 const capacities: readonly CapacityRow[] = [
-  { label: "공간 만들기", free: "1개", pro: "3개", business: "협의" },
-  { label: "공간 참여", free: "5개", pro: "무제한", business: "무제한" },
-  { label: "공간당 멤버", free: "10명", pro: "300명", business: "협의" },
   {
-    label: "글 작성·댓글·투표",
-    free: "무제한",
+    label: "공간 만들기",
+    free: "참여 전용",
+    starter: "3개",
+    pro: "10개",
+    business: "협의",
+  },
+  {
+    label: "게시판 수",
+    free: "—",
+    starter: "10개",
+    pro: "50개",
+    business: "협의",
+  },
+  {
+    label: "공간당 멤버",
+    free: "—",
+    starter: "30명",
+    pro: "500명",
+    business: "협의",
+  },
+  {
+    label: "공간 참여",
+    free: "5개",
+    starter: "무제한",
     pro: "무제한",
     business: "무제한",
   },
-  { label: "스토리지", free: "100 MiB", pro: "5 GiB", business: "협의" },
+  {
+    label: "글 작성·댓글·투표",
+    free: "무제한",
+    starter: "무제한",
+    pro: "무제한",
+    business: "무제한",
+  },
+  {
+    label: "스토리지",
+    free: "100 MiB",
+    starter: "500 MiB",
+    pro: "5 GiB",
+    business: "협의",
+  },
   {
     label: "AI 요약",
     free: "내 키 연결 시 무제한",
-    pro: "50회/일",
+    starter: "20회/일",
+    pro: "100회/일",
     business: "협의",
   },
 ];
 
-interface Plan {
-  readonly name: string;
+interface PlanPrice {
   readonly price: string | null;
   readonly originalPrice?: string;
-  readonly priceUnit?: string;
+  readonly unit: string;
+}
+
+interface Plan {
+  readonly name: string;
+  readonly getPrice: (cycle: BillingCycle) => PlanPrice;
   readonly description: string;
-  readonly badge?: string;
+  readonly getBadge?: (cycle: BillingCycle) => string | undefined;
   readonly cta: string;
-  readonly href: string;
+  readonly getHref: (cycle: BillingCycle) => string;
   readonly highlighted: boolean;
 }
 
 const plans: readonly Plan[] = [
   {
     name: "Free",
-    price: "₩0",
-    priceUnit: "",
-    description: "개인 또는 소규모 커뮤니티",
+    getPrice: () => ({ price: "₩0", unit: "" }),
+    description: "커뮤니티에 참여하며 시작해요",
     cta: "무료로 시작하기",
-    href: APP_ROUTES.signup,
+    getHref: () => APP_ROUTES.signup,
     highlighted: false,
   },
   {
-    name: "Pro Monthly",
-    price: "₩14,950",
-    originalPrice: "₩29,900",
-    priceUnit: "/월",
+    name: "Starter",
+    getPrice: (cycle) =>
+      cycle === "yearly"
+        ? { price: "₩70,000", originalPrice: "₩84,000", unit: "/년" }
+        : { price: "₩7,000", unit: "/월" },
+    description: "개인·소규모 커뮤니티 운영",
+    cta: "Starter 시작하기",
+    getHref: (cycle) =>
+      APP_ROUTES.signupWithPlan(
+        cycle === "yearly" ? "starter-yearly" : "starter",
+      ),
+    highlighted: false,
+  },
+  {
+    name: "Pro",
+    getPrice: (cycle) =>
+      cycle === "yearly"
+        ? { price: "₩149,500", originalPrice: "₩358,800", unit: "/년" }
+        : { price: "₩14,950", originalPrice: "₩29,900", unit: "/월" },
     description: "성장하는 커뮤니티를 위한 최적의 선택",
-    badge: "50% 프로모션",
+    getBadge: (cycle) =>
+      cycle === "yearly" ? "50% + 2개월 무료" : "50% 프로모션",
     cta: "Pro 시작하기",
-    href: APP_ROUTES.signupWithPlan("pro"),
+    getHref: (cycle) =>
+      APP_ROUTES.signupWithPlan(cycle === "yearly" ? "pro-yearly" : "pro"),
     highlighted: true,
   },
   {
-    name: "Pro Yearly",
-    price: "₩149,500",
-    originalPrice: "₩358,800",
-    priceUnit: "/년",
-    description: "연간 구독 (50% + 2개월 무료)",
-    badge: "50% + 2개월 무료",
-    cta: "Pro 연간 시작하기",
-    href: APP_ROUTES.signupWithPlan("pro-yearly"),
-    highlighted: false,
-  },
-  {
     name: "Business",
-    price: null,
+    getPrice: () => ({ price: null, unit: "" }),
     description: "대규모 조직 맞춤 설계 및 도메인",
     cta: "문의하기",
-    href: "mailto:admin@comuboard.com",
+    getHref: () => "mailto:admin@comuboard.com",
     highlighted: false,
   },
 ];
 
-function PlanCard({ plan }: { readonly plan: Plan }) {
-  const padding = plan.badge ? "px-6 pb-6 pt-12" : "p-6";
+function BillingToggle({
+  cycle,
+  onChange,
+}: {
+  readonly cycle: BillingCycle;
+  readonly onChange: (cycle: BillingCycle) => void;
+}) {
+  const base =
+    "relative rounded-full px-5 py-2 text-sm font-bold transition-colors";
+  const active =
+    "bg-linear-to-r from-violet-600 to-indigo-600 text-white shadow-sm";
+  const inactive =
+    "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white";
+
+  return (
+    <div className="mb-12 flex justify-center">
+      <div className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white/90 p-1 shadow-sm dark:border-slate-700/60 dark:bg-slate-900/50">
+        <button
+          type="button"
+          onClick={() => onChange("monthly")}
+          className={`${base} ${cycle === "monthly" ? active : inactive}`}
+        >
+          월간
+        </button>
+        <button
+          type="button"
+          onClick={() => onChange("yearly")}
+          className={`${base} inline-flex items-center gap-1.5 ${
+            cycle === "yearly" ? active : inactive
+          }`}
+        >
+          연간
+          <span
+            className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+              cycle === "yearly"
+                ? "bg-white/20 text-white"
+                : "bg-brand-50 text-brand-600 dark:bg-brand-500/20 dark:text-brand-300"
+            }`}
+          >
+            2개월 무료
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PlanCard({
+  plan,
+  cycle,
+}: {
+  readonly plan: Plan;
+  readonly cycle: BillingCycle;
+}) {
+  const { price, originalPrice, unit } = plan.getPrice(cycle);
+  const badge = plan.getBadge?.(cycle);
+  const padding = badge ? "px-6 pb-6 pt-12" : "p-6";
 
   return (
     <div
@@ -96,7 +197,7 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
         <div className="pointer-events-none absolute inset-0 rounded-3xl bg-linear-to-br from-violet-500/4 to-indigo-600/6 dark:from-violet-400/6 dark:to-indigo-500/8" />
       )}
 
-      {plan.badge && (
+      {badge && (
         <div
           className={`absolute -top-3 left-1/2 z-20 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full border px-3.5 py-1 text-xs font-bold shadow-md backdrop-blur-md ${
             plan.highlighted
@@ -111,7 +212,7 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
                 : "fill-brand-500 dark:fill-brand-400 text-brand-500 dark:text-brand-400"
             }`}
           />
-          {plan.badge}
+          {badge}
         </div>
       )}
 
@@ -132,7 +233,7 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
         </div>
 
         <div className="relative mt-8">
-          {plan.price !== null ? (
+          {price !== null ? (
             <div className="flex items-baseline gap-1 whitespace-nowrap">
               <span
                 className={`text-2xl lg:text-3xl font-extrabold tracking-tight ${
@@ -141,11 +242,11 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
                     : "text-slate-900 dark:text-white"
                 }`}
               >
-                {plan.price}
+                {price}
               </span>
-              {plan.priceUnit && (
+              {unit && (
                 <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                  {plan.priceUnit}
+                  {unit}
                 </span>
               )}
             </div>
@@ -154,9 +255,9 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
               Contact
             </span>
           )}
-          {plan.originalPrice && (
+          {originalPrice && (
             <p className="mt-2 text-sm text-slate-400 dark:text-slate-500">
-              <span className="line-through">{plan.originalPrice}</span>
+              <span className="line-through">{originalPrice}</span>
             </p>
           )}
         </div>
@@ -168,13 +269,13 @@ function PlanCard({ plan }: { readonly plan: Plan }) {
               : "bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300"
           }`}
         >
-          모든 기능은 그대로, 용량만 달라요
+          핵심 기능은 그대로, 용량이 달라요
         </div>
 
         <div className="min-h-0 flex-1" aria-hidden />
 
         <a
-          href={plan.href}
+          href={plan.getHref(cycle)}
           className={`group relative mt-8 flex items-center justify-center gap-2 rounded-xl py-4 text-center text-sm font-bold transition-all ${
             plan.highlighted
               ? "bg-linear-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/35 hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
@@ -201,7 +302,7 @@ function CapacityTable() {
         요금제별 상세 용량 비교
       </h3>
       <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm shadow-sm dark:shadow-none">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[36rem] text-sm">
           <thead>
             <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
               <th className="py-5 pl-8 pr-4 text-left font-semibold text-slate-500 dark:text-slate-400">
@@ -209,6 +310,9 @@ function CapacityTable() {
               </th>
               <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
                 Free
+              </th>
+              <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
+                Starter
               </th>
               <th
                 className={`px-4 py-5 text-center font-bold text-lg ${proCol} bg-violet-100/90 dark:bg-violet-950/50 text-violet-800 dark:text-violet-100`}
@@ -232,6 +336,9 @@ function CapacityTable() {
                 <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
                   {row.free}
                 </td>
+                <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
+                  {row.starter}
+                </td>
                 <td className={`px-4 py-4 text-center font-bold ${proCol}`}>
                   {row.pro}
                 </td>
@@ -243,6 +350,9 @@ function CapacityTable() {
             <tr className="bg-slate-50/50 dark:bg-slate-900/30">
               <td className="py-5 pl-8 pr-4 font-bold text-slate-900 dark:text-slate-200">
                 핵심 기능 포함 여부
+              </td>
+              <td className="px-4 py-5 text-center">
+                <Check className="mx-auto h-5 w-5 text-brand-500" />
               </td>
               <td className="px-4 py-5 text-center">
                 <Check className="mx-auto h-5 w-5 text-brand-500" />
@@ -262,6 +372,8 @@ function CapacityTable() {
 }
 
 export function Pricing() {
+  const [cycle, setCycle] = useState<BillingCycle>("monthly");
+
   return (
     <section
       id="pricing"
@@ -283,9 +395,11 @@ export function Pricing() {
           </p>
         </div>
 
+        <BillingToggle cycle={cycle} onChange={setCycle} />
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
           {plans.map((plan) => (
-            <PlanCard key={plan.name} plan={plan} />
+            <PlanCard key={plan.name} plan={plan} cycle={cycle} />
           ))}
         </div>
 

@@ -93,8 +93,8 @@ const plans: readonly Plan[] = [
     name: "Starter",
     getPrice: (cycle) =>
       cycle === "yearly"
-        ? { price: "₩70,000", originalPrice: "₩168,000", unit: "/년" }
-        : { price: "₩7,000", originalPrice: "₩14,000", unit: "/월" },
+        ? { price: "₩49,000", originalPrice: "₩117,600", unit: "/년" }
+        : { price: "₩4,900", originalPrice: "₩9,800", unit: "/월" },
     description: "개인·소규모 커뮤니티 운영",
     getBadge: (cycle) =>
       cycle === "yearly" ? "50% + 2개월 무료" : "50% 프로모션",

@@ -109,7 +109,7 @@ const plans: readonly Plan[] = [
     name: "Pro",
     getPrice: (cycle) =>
       cycle === "yearly"
-        ? { price: "₩149,500", originalPrice: "₩358,800", unit: "/년" }
+        ? { price: "₩149,500", originalPrice: "₩299,000", unit: "/년" }
         : { price: "₩14,950", originalPrice: "₩29,900", unit: "/월" },
     description: "성장하는 커뮤니티를 위한 최적의 선택",
     getBadge: (cycle) =>

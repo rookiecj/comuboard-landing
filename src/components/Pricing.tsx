@@ -300,74 +300,85 @@ function CapacityTable() {
 
   return (
     <div className="mt-20">
-      <h3 className="mb-8 text-center text-xl font-bold text-slate-900 dark:text-white">
+      <h3 className="mb-3 text-center text-xl font-bold text-slate-900 dark:text-white sm:mb-8">
         요금제별 상세 용량 비교
       </h3>
-      <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm shadow-sm dark:shadow-none">
-        <table className="w-full min-w-[36rem] text-sm">
-          <thead>
-            <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
-              <th className="py-5 pl-8 pr-4 text-left font-semibold text-slate-500 dark:text-slate-400">
-                지원 항목
-              </th>
-              <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
-                Free
-              </th>
-              <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
-                Starter
-              </th>
-              <th
-                className={`px-4 py-5 text-center font-bold text-lg ${proCol} bg-violet-100/90 dark:bg-violet-950/50 text-violet-800 dark:text-violet-100`}
-              >
-                Pro
-              </th>
-              <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
-                Business
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
-            {capacities.map((row) => (
-              <tr
-                key={row.label}
-                className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/30"
-              >
-                <td className="py-4 pl-8 pr-4 font-medium text-slate-700 dark:text-slate-300">
-                  {row.label}
+      {/* 모바일: 가로 스크롤 안내 (표가 뷰포트보다 넓어 Starter/Pro/Business 열이 화면 밖) */}
+      <p className="mb-5 text-center text-xs text-slate-400 dark:text-slate-500 sm:hidden">
+        표를 좌우로 넘겨 모든 플랜을 확인하세요
+      </p>
+      <div className="relative">
+        <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm shadow-sm dark:shadow-none">
+          <table className="w-full min-w-[36rem] text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
+                <th className="py-5 pl-8 pr-4 text-left font-semibold text-slate-500 dark:text-slate-400">
+                  지원 항목
+                </th>
+                <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
+                  Free
+                </th>
+                <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
+                  Starter
+                </th>
+                <th
+                  className={`px-4 py-5 text-center font-bold text-lg ${proCol} bg-violet-100/90 dark:bg-violet-950/50 text-violet-800 dark:text-violet-100`}
+                >
+                  Pro
+                </th>
+                <th className="px-4 py-5 text-center font-bold text-lg text-slate-900 dark:text-white">
+                  Business
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
+              {capacities.map((row) => (
+                <tr
+                  key={row.label}
+                  className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/30"
+                >
+                  <td className="py-4 pl-8 pr-4 font-medium text-slate-700 dark:text-slate-300">
+                    {row.label}
+                  </td>
+                  <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
+                    {row.free}
+                  </td>
+                  <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
+                    {row.starter}
+                  </td>
+                  <td className={`px-4 py-4 text-center font-bold ${proCol}`}>
+                    {row.pro}
+                  </td>
+                  <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
+                    {row.business}
+                  </td>
+                </tr>
+              ))}
+              <tr className="bg-slate-50/50 dark:bg-slate-900/30">
+                <td className="py-5 pl-8 pr-4 font-bold text-slate-900 dark:text-slate-200">
+                  핵심 기능 포함 여부
                 </td>
-                <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
-                  {row.free}
+                <td className="px-4 py-5 text-center">
+                  <Check className="mx-auto h-5 w-5 text-brand-500" />
                 </td>
-                <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
-                  {row.starter}
+                <td className="px-4 py-5 text-center">
+                  <Check className="mx-auto h-5 w-5 text-brand-500" />
                 </td>
-                <td className={`px-4 py-4 text-center font-bold ${proCol}`}>
-                  {row.pro}
+                <td className={`px-4 py-5 text-center ${proCol}`}>
+                  <Check className="mx-auto h-5 w-5 text-violet-600 dark:text-violet-400" />
                 </td>
-                <td className="px-4 py-4 text-center text-slate-600 dark:text-slate-400">
-                  {row.business}
+                <td className="px-4 py-5 text-center">
+                  <Check className="mx-auto h-5 w-5 text-brand-500" />
                 </td>
               </tr>
-            ))}
-            <tr className="bg-slate-50/50 dark:bg-slate-900/30">
-              <td className="py-5 pl-8 pr-4 font-bold text-slate-900 dark:text-slate-200">
-                핵심 기능 포함 여부
-              </td>
-              <td className="px-4 py-5 text-center">
-                <Check className="mx-auto h-5 w-5 text-brand-500" />
-              </td>
-              <td className="px-4 py-5 text-center">
-                <Check className="mx-auto h-5 w-5 text-brand-500" />
-              </td>
-              <td className={`px-4 py-5 text-center ${proCol}`}>
-                <Check className="mx-auto h-5 w-5 text-violet-600 dark:text-violet-400" />
-              </td>
-              <td className="px-4 py-5 text-center">
-                <Check className="mx-auto h-5 w-5 text-brand-500" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+        {/* 모바일: 우측 그라데이션 페이드 — 가로 스크롤 여지 표시 */}
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 w-12 rounded-r-3xl bg-gradient-to-l from-white to-transparent dark:from-slate-900 sm:hidden"
+          aria-hidden
+        />
       </div>
     </div>
   );
@@ -391,7 +402,7 @@ export function Pricing() {
             합리적인 요금제
           </h2>
           <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-            모든 플랜에서 커뮤보드의 강력한 핵심 기능을 경험할 수 있어요.
+            모든 플랜에서 커뮤보드의 강력한 핵심 기능을 경험할 수 있어요.{" "}
             <br className="hidden sm:block" />
             필요한 용량에 맞게 골라보세요.
           </p>

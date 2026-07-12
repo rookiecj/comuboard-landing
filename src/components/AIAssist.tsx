@@ -12,6 +12,8 @@ import {
   MousePointerClick,
   KeyRound,
   ChevronRight,
+  BrainCircuit,
+  Tags,
 } from "lucide-react";
 import { APP_ROUTES } from "../config";
 
@@ -36,6 +38,29 @@ const aiPoints: readonly AIPoint[] = [
     title: "내 AI 키(BYOAI) 그대로",
     icon: KeyRound,
     color: "text-pink-500 dark:text-pink-400",
+  },
+];
+
+interface AICapability {
+  readonly title: string;
+  readonly description: string;
+  readonly icon: typeof Eye;
+  readonly color: string;
+}
+
+// Features 섹션에서 이관한 AI 역량 (요약·분류) — AI 관련 기능을 한곳에 모음.
+const aiCapabilities: readonly AICapability[] = [
+  {
+    title: "AI 요약 파이프라인",
+    description: "긴 링크나 글도 AI가 핵심만 3줄로 요약해줘서 빠르게 파악해요.",
+    icon: BrainCircuit,
+    color: "text-blue-500 dark:text-blue-400",
+  },
+  {
+    title: "AI 자동 분류·태깅",
+    description: "글 내용에 맞는 태그와 카테고리를 AI가 알아서 제안해줘요.",
+    icon: Tags,
+    color: "text-cyan-500 dark:text-cyan-400",
   },
 ];
 
@@ -115,6 +140,36 @@ export function AIAssist() {
               >
                 <Icon className={`h-5 w-5 shrink-0 ${point.color}`} />
                 {point.title}
+              </li>
+            );
+          })}
+        </motion.ul>
+
+        {/* AI 역량 카드 (Features 에서 이관 — AI 기능을 한곳에) */}
+        <motion.p
+          variants={itemVariants}
+          className="mt-12 text-sm font-semibold text-slate-500 dark:text-slate-400"
+        >
+          요약부터 분류까지, AI가 이런 것도 도와줘요
+        </motion.p>
+        <motion.ul
+          variants={itemVariants}
+          className="mx-auto mt-5 grid gap-4 text-left sm:grid-cols-2"
+        >
+          {aiCapabilities.map((cap) => {
+            const Icon = cap.icon;
+            return (
+              <li
+                key={cap.title}
+                className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-none"
+              >
+                <Icon className={`h-6 w-6 shrink-0 ${cap.color}`} />
+                <span className="text-base font-bold text-slate-900 dark:text-white">
+                  {cap.title}
+                </span>
+                <span className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  {cap.description}
+                </span>
               </li>
             );
           })}

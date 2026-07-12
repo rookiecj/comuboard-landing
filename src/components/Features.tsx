@@ -4,8 +4,6 @@ import {
   Rss,
   Mail,
   AtSign,
-  BrainCircuit,
-  Tags,
   MessageSquare,
   Newspaper,
   Share2,
@@ -15,7 +13,6 @@ import {
   PenTool,
   Workflow,
   ShieldCheck,
-  ScanEye,
   Presentation,
   ChevronDown,
   PenLine,
@@ -64,16 +61,6 @@ const bentoFeatures: BentoItem[] = [
   },
   // 다듬다 — 좋은 글이 위로 올라오는 게시판
   {
-    title: "AI 요약 파이프라인",
-    description:
-      "긴 링크를 AI가 3줄로 핵심만 요약해 빠르게 파악할 수 있습니다.",
-    detail:
-      "LLM 기반 게시글 자동 요약, 카테고리/태그 자동 제안으로 콘텐츠를 체계적으로 정리합니다.",
-    icon: BrainCircuit,
-    color: "text-blue-500 dark:text-blue-400",
-    bgBlob: "bg-blue-500/10 group-hover:bg-blue-500/20",
-  },
-  {
     title: "투표 & 스레드",
     description:
       "업보트/다운보트와 깔끔한 중첩 댓글로 양질의 지식이 떠오릅니다.",
@@ -82,15 +69,6 @@ const bentoFeatures: BentoItem[] = [
     icon: MessageSquare,
     color: "text-sky-500 dark:text-sky-400",
     bgBlob: "bg-sky-500/10 group-hover:bg-sky-500/20",
-  },
-  {
-    title: "AI 자동 분류",
-    description: "게시글 내용에 맞는 태그와 카테고리를 AI가 알아서 제안합니다.",
-    detail:
-      "자유 태그와 5종 커스텀 필드(텍스트/숫자/선택/날짜/평점)로 콘텐츠를 원하는 대로 분류합니다.",
-    icon: Tags,
-    color: "text-cyan-500 dark:text-cyan-400",
-    bgBlob: "bg-cyan-500/10 group-hover:bg-cyan-500/20",
   },
   // 나누다 — 밖으로 퍼지는 게시판
   {
@@ -122,16 +100,6 @@ const bentoFeatures: BentoItem[] = [
     bgBlob: "bg-pink-500/10 group-hover:bg-pink-500/20",
   },
   // 몰입을 돕는 도구
-  {
-    title: "화면을 이해하는 AI 도우미",
-    description:
-      "지금 보고 있는 화면(글·게시판·공간)을 이해해, 긴 글을 요약하고 다음 할 일을 먼저 제안합니다.",
-    detail:
-      "AI 도우미가 현재 화면과 내 역할을 파악해 맥락에 맞게 답합니다. 긴 글이나 게시판은 핵심만 요약하고, 화면마다 '여기서 할 수 있는 행동'을 제안 칩으로 먼저 안내해 한 번에 시작할 수 있습니다.",
-    icon: ScanEye,
-    color: "text-violet-500 dark:text-violet-400",
-    bgBlob: "bg-violet-500/10 group-hover:bg-violet-500/20",
-  },
   {
     title: "완벽한 몰입, Zen 모드",
     description:
@@ -222,7 +190,7 @@ function MarkdownWritingShowcase() {
       variants={itemVariants}
       className="mb-12"
     >
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-6 text-center">
         <div>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">
             <PenLine className="h-3.5 w-3.5" />

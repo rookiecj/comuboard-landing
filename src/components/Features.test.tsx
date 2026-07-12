@@ -24,9 +24,17 @@ describe("Features — 통합 도구 섹션 + 마크다운 글쓰기 쇼케이�
     expect(screen.getByText(/몰입을 돕는 강력한/)).toBeInTheDocument();
     // 모으다/다듬다/나누다 + 몰입 도구가 한 섹션에 공존
     expect(screen.getByText("RSS 피드 수집")).toBeInTheDocument();
-    expect(screen.getByText("AI 요약 파이프라인")).toBeInTheDocument();
+    expect(screen.getByText("투표 & 스레드")).toBeInTheDocument();
     expect(screen.getByText("QR코드 보드 접속")).toBeInTheDocument();
     expect(screen.getByText("완벽한 몰입, Zen 모드")).toBeInTheDocument();
+  });
+
+  it("moves AI features out to the AI 도우미 section", () => {
+    render(<Features />);
+    // AI 관련 기능(요약·자동분류·화면 이해 도우미)은 AIAssist 섹션으로 이관됨.
+    expect(screen.queryByText("AI 요약 파이프라인")).toBeNull();
+    expect(screen.queryByText("AI 자동 분류")).toBeNull();
+    expect(screen.queryByText("화면을 이해하는 AI 도우미")).toBeNull();
   });
 
   it("removes the standalone 3-축 pillar section", () => {

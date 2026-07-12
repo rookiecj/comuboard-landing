@@ -36,6 +36,13 @@ describe("AIAssist — 화면을 이해하는 AI 도우미 섹션", () => {
     expect(screen.getByText("내 AI 키(BYOAI) 그대로")).toBeInTheDocument();
   });
 
+  it("renders the AI 역량 카드 이관 (요약·분류)", () => {
+    renderAIAssist();
+    // Features 섹션에서 옮겨온 AI 기능이 AI 도우미 섹션에 모여 있어야 한다.
+    expect(screen.getByText("AI 요약 파이프라인")).toBeInTheDocument();
+    expect(screen.getByText("AI 자동 분류·태깅")).toBeInTheDocument();
+  });
+
   it("links BYOAI CTA to the alive /help/ai-byoai guide", () => {
     renderAIAssist();
     const cta = screen.getByRole("link", { name: /BYOAI 연결 방법 보기/ });

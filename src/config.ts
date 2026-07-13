@@ -1,5 +1,7 @@
 // 앱 URL 설정 — Landing에서 comuboard-fe로 연결되는 모든 URL의 base
-// 환경변수 VITE_APP_URL로 설정 가능 (dev: https://app.changju.dev/app/comuboard, prod: /app)
+// 환경변수 VITE_APP_URL로 설정 (dev: https://app.changju.dev/app/comuboard).
+// prod(v2): 앱이 comuboard.com 루트에 있으므로 "" (빈 값 → /main·/login 직접 링크).
+// 레거시 /app/* 는 Traefik 301(comuboard-prod-app-redirect)이 안전망으로 흡수.
 const APP_URL = (import.meta.env.VITE_APP_URL as string) || "";
 
 export const appUrl = (path: string) => `${APP_URL}${path}`;

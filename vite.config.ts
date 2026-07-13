@@ -10,6 +10,10 @@ export default defineConfig({
   // Dev: /app/comuboard/landing/, Prod: / (VITE_BASE_PATH 환경변수로 제어)
   base: basePath,
   build: {
+    // prod comuboard.com 에서 FE(comuboard-web)가 /assets/ 를 소유하므로
+    // 랜딩 번들을 /lp-assets/ 로 이전해 한 호스트 자산 충돌을 회피한다
+    // (2026-07-13 v2 라우팅 완성, ADR 2026-07-13-prod-two-spa-single-host-routing).
+    assetsDir: "lp-assets",
     // STORY-189-03: emit source maps but don't reference them in the bundle.
     // Manual `sentry-cli releases files upload-sourcemaps dist` for now;
     // GH Actions automation is a D+14 follow-up.

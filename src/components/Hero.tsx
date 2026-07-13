@@ -88,7 +88,7 @@ export function Hero() {
       {/* Background Image & Overlays */}
       <div className="absolute inset-0 z-0 select-none pointer-events-none">
         <img
-          src={`${import.meta.env.BASE_URL}hero-bg.webp`}
+          src={`${import.meta.env.BASE_URL}lp-assets/hero-bg.webp`}
           alt="Comuboard Hero Background"
           className="w-full h-full object-cover opacity-80 dark:opacity-70 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-700"
         />
@@ -135,7 +135,7 @@ export function Hero() {
         >
           {/* Main Logo Icon next to the title */}
           <img
-            src={`${import.meta.env.BASE_URL}logo.png`}
+            src={`${import.meta.env.BASE_URL}lp-assets/logo.png`}
             alt="ComuBoard Logo"
             className="h-16 w-16 sm:h-20 sm:w-20 drop-shadow-xl"
           />

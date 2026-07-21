@@ -31,7 +31,7 @@ interface BentoItem {
 }
 
 const bentoFeatures: BentoItem[] = [
-  // 모으다 — 글이 쉽게 올라오는 게시판
+  // 모으다(쌓다) — 쓰기도 모으기도 쉽게 게시판에 쌓이는 글
   {
     title: "소셜 멘션 수집",
     description: "X(Twitter), Slack 등에서 멘션을 감지하여 자동 수집합니다.",
@@ -205,7 +205,7 @@ function MarkdownWritingShowcase() {
           </h3>
           <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
             제목·강조·목록은 기본, 표·체크리스트·콜아웃·다이어그램까지 그대로
-            써요. 쓰는 즉시 이렇게 보여요.
+            써요. 쓰는 즉시 이렇게 보이고, 한 편 한 편 게시판에 쌓여요.
           </p>
         </div>
       </div>
@@ -336,8 +336,9 @@ export function Features() {
               </span>
             </h2>
             <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-              글 작성부터 수집·정제·공유, 그리고 몰입까지 — 좋은 게시판이 하는
-              모든 일을 한곳에서 만나보세요.
+              쓰는 것도 모으는 것도 게시판에 차곡차곡 쌓여요. 쌓인 글을 다듬어
+              밖으로 나누는 것까지 — 좋은 게시판이 하는 모든 일을 한곳에서
+              만나보세요.
             </p>
           </div>
 

@@ -15,21 +15,21 @@ interface CapacityRow {
 const capacities: readonly CapacityRow[] = [
   {
     label: "공간 만들기",
-    free: "참여 전용",
+    free: "1개",
     starter: "3개",
     pro: "10개",
     business: "협의",
   },
   {
     label: "게시판 수",
-    free: "—",
-    starter: "10개",
+    free: "10개",
+    starter: "20개",
     pro: "50개",
     business: "협의",
   },
   {
     label: "공간당 멤버",
-    free: "—",
+    free: "10명",
     starter: "30명",
     pro: "500명",
     business: "협의",
@@ -84,7 +84,7 @@ const plans: readonly Plan[] = [
   {
     name: "Free",
     getPrice: () => ({ price: "₩0", unit: "" }),
-    description: "커뮤니티에 참여하며 시작해요",
+    description: "공간 하나를 무료로 만들어 시작해요",
     cta: "무료로 시작하기",
     getHref: () => APP_ROUTES.signup,
     highlighted: false,

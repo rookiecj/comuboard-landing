@@ -25,7 +25,42 @@ import type { ErrorEvent as SentryErrorEvent, EventHint } from "@sentry/react";
 export const REDACTED = "REDACTED";
 
 const SENSITIVE_QUERY_KEYS =
-  /(token|code|magic|access_token|refresh_token)=[^&#]*/gi;
+  /(token|code|magic|access_token|refresh_token|X-Amz-Signature|X-Amz-Credential|X-Amz-Security-Token)=[^&#]*/gi;
+
+/**
+ * Replace credential-bearing query params anywhere in a string.
+ *
+ * presigned URL 은 **URL 안에 담긴 자격증명**이다. 업로드가 실패하면 그 URL 이
+ * 에러 메시지·breadcrumb 에 실려 제3자(Sentry)에게 그대로 간다 — 서명은 TTL
+ * 동안 유효하므로 로그에 남는 순간 재사용 가능한 credential 이 유출된다.
+ */
+function redactUrlLike(value: string): string {
+  return value.replace(SENSITIVE_QUERY_KEYS, (_m, key) => `${key}=${REDACTED}`);
+}
+
+/**
+ * Scrub a breadcrumb in place.
+ *
+ * **breadcrumb 가 진짜 유출 경로다.** `beforeSend` 의 `event.request.url` 은
+ * 페이지 URL 이고, fetch/XHR 대상 URL 은 breadcrumb 의 `data.url` 에 담긴다.
+ * presigned PUT 이 실패하면 그게 바로 여기에 들어온다.
+ */
+export function redactBreadcrumb<
+  T extends { message?: string; data?: Record<string, unknown> },
+>(crumb: T): T {
+  if (typeof crumb.message === "string") {
+    crumb.message = redactUrlLike(crumb.message);
+  }
+  if (crumb.data && typeof crumb.data === "object") {
+    for (const key of Object.keys(crumb.data)) {
+      const v = crumb.data[key];
+      if (typeof v === "string") {
+        crumb.data[key] = redactUrlLike(v);
+      }
+    }
+  }
+  return crumb;
+}
 
 /**
  * Mutates `event.request.url` in place to strip credentials from the URL
@@ -36,13 +71,30 @@ export function redactPii<T extends SentryErrorEvent>(
   event: T,
   _hint?: EventHint,
 ): T {
+  // 1. URL query string sensitive params
   if (event.request?.url) {
-    event.request.url = event.request.url.replace(
-      SENSITIVE_QUERY_KEYS,
-      (_match, key) => `${key}=${REDACTED}`,
-    );
+    event.request.url = redactUrlLike(event.request.url);
   }
 
+  // 1b. Breadcrumbs — fetch/XHR 대상 URL 이 여기 담긴다. presigned PUT 이
+  //     실패하면 서명이 통째로 실려 오므로 request.url 만 지우는 것으로는
+  //     부족하다.
+  if (Array.isArray(event.breadcrumbs)) {
+    for (const crumb of event.breadcrumbs) {
+      if (crumb) redactBreadcrumb(crumb);
+    }
+  }
+
+  // 1c. 예외 메시지 — "Failed to PUT https://...?X-Amz-Signature=..." 처럼
+  //     URL 이 문자열에 박혀 오는 경우.
+  for (const ex of event.exception?.values ?? []) {
+    if (typeof ex.value === "string") ex.value = redactUrlLike(ex.value);
+  }
+  if (typeof event.message === "string") {
+    event.message = redactUrlLike(event.message);
+  }
+
+  // 2. Authorization header value
   if (event.request?.headers && typeof event.request.headers === "object") {
     const headers = event.request.headers as Record<string, string>;
     for (const k of Object.keys(headers)) {
@@ -52,6 +104,8 @@ export function redactPii<T extends SentryErrorEvent>(
     }
   }
 
+  // 3. Form input password — Sentry sometimes stashes form payloads under
+  //    `contexts.input` (e.g. via the captureconsole/integrations layer).
   const contexts = event.contexts as
     | Record<string, Record<string, unknown> | undefined>
     | undefined;

@@ -12,10 +12,18 @@ run:	## Run dev server
 
 dev: run	## Alias for run
 
-test:	## Type check
+test:	## Type check + unit tests (vitest)
 	npx tsc --noEmit
+	NODE_OPTIONS='--no-deprecation' npm run test
 
-test-quiet: test	## Alias for test
+# 2026-09-18 정정: test-quiet 가 tsc 별칭이라 vitest 76건(sentry PII 동기화
+# 가드 포함)이 어떤 publish 경로에서도 돈 적이 없었다. FE 관용구로 교체.
+test-quiet:	## Type check + tests; print only pass/fail
+	@npx tsc --noEmit >/dev/null 2>&1; ret=$$?; \
+	if [ $$ret -ne 0 ]; then echo "Landing typecheck: FAIL"; npx tsc --noEmit 2>&1 | head -20; exit $$ret; fi; \
+	NODE_OPTIONS='--no-deprecation' npm run test >/dev/null 2>&1; ret=$$?; \
+	if [ $$ret -eq 0 ]; then echo "Landing tests: PASS (tsc + vitest)"; else echo "Landing tests: FAIL"; NODE_OPTIONS='--no-deprecation' npm run test 2>&1 | tail -30; fi; \
+	exit $$ret
 
 fmt:	## Format source
 	npx prettier --write src/
@@ -96,12 +104,8 @@ publish-dev:	## Validate, tag, build ARM64 image for dev (dev-v{VERSION})
 	@echo "=== Landing: publish-dev v$(VERSION) ==="
 	@echo "--- build ---"
 	$(MAKE) build
-	@if [ "$(FAST)" = "1" ]; then \
-		echo "--- test(quiet) SKIPPED (FAST=1) ---"; \
-	else \
-		echo "--- test(quiet) ---"; \
-		$(MAKE) test-quiet; \
-	fi
+	@echo "--- test(quiet) — FAST=1 에서도 실행 (14파일·2s, 2026-09-18 결정: 스킵이 sentry PII 동기화 가드를 3개월 껐다) ---"
+	@$(MAKE) test-quiet
 	@echo "--- Tagging dev-v$(VERSION) ---"
 	@git fetch origin --tags
 	@if git rev-parse "dev-v$(VERSION)" >/dev/null 2>&1; then \
@@ -118,12 +122,8 @@ publish-prod:	## Validate, tag, build ARM64 image for prod (v{VERSION})
 	@echo "=== Landing: publish-prod v$(VERSION) ==="
 	@echo "--- build ---"
 	$(MAKE) build
-	@if [ "$(FAST)" = "1" ]; then \
-		echo "--- test(quiet) SKIPPED (FAST=1) ---"; \
-	else \
-		echo "--- test(quiet) ---"; \
-		$(MAKE) test-quiet; \
-	fi
+	@echo "--- test(quiet) — FAST=1 에서도 실행 (14파일·2s, 2026-09-18 결정: 스킵이 sentry PII 동기화 가드를 3개월 껐다) ---"
+	@$(MAKE) test-quiet
 	@echo "--- Tagging v$(VERSION) ---"
 	@git fetch origin --tags
 	@if git rev-parse "v$(VERSION)" >/dev/null 2>&1; then \

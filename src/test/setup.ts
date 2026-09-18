@@ -18,3 +18,10 @@ if (!("IntersectionObserver" in globalThis)) {
     globalThis as unknown as { IntersectionObserver: unknown }
   ).IntersectionObserver = IntersectionObserverStub;
 }
+
+// jsdom 에는 Element.prototype.scrollIntoView 가 없다. DomainPacks 탭 선택
+// (b1f52c4, 2026-06-13)이 이를 호출해 테스트 2건이 uncaught TypeError 로
+// 3개월간 빨간 상태였다 — FAST=1 이 게이트를 꺼 아무도 못 봤다.
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => {};
+}

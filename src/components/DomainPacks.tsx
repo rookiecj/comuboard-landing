@@ -103,7 +103,9 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     emoji: "📓",
     icon: NotebookPen,
     label: "나의 작업실",
-    persona: "혼자 쓰세요?",
+    // "혼자 쓰세요?" 는 무엇을 혼자 쓰는지(공간인지 글인지)가 비어 있었다. 대상을 적고
+    // 다른 카드의 물음 형태("동호회 총무세요?")를 유지한다(CW 결정 ② 2026-09-26 — FE 문안 채택).
+    persona: "혼자 쓰는 작업실이 필요해요?",
     value:
       "메모·할 일·가계부·습관을 나만의 작업실에 모으고, 고른 글만 살며시 공개하면 작은 블로그가 돼요.",
     boards: [

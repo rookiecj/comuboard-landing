@@ -32,9 +32,12 @@ describe("DomainPacks — 도메인 팩 섹션(운영자 5 + 나의 작업실)",
     ]);
   });
 
-  it("pack data board counts match registry (7/6/6/5/9/7)", () => {
+  // 공유 할 일 편성(2026-09-26)으로 4팩이 +1 됐다: hobby 7→8 · study 6→7 ·
+  // sports 5→6 · church 7→8. 래칫을 끄지 않고 기대값을 옮긴다 — 카드가 적용 결과를
+  // 덜 나열하던 것이 결함이었으므로 이 수는 registry 보드 수와 같아야 한다.
+  it("pack data board counts match registry (8/6/7/6/9/8)", () => {
     const counts = DOMAIN_PACKS.map((p) => p.boards.length);
-    expect(counts).toEqual([7, 6, 6, 5, 9, 7]);
+    expect(counts).toEqual([8, 6, 7, 6, 9, 8]);
     // key 정합 (위저드 ?pack= 계약)
     expect(DOMAIN_PACKS.map((p) => p.key)).toEqual([
       "hobby-club",
@@ -46,10 +49,12 @@ describe("DomainPacks — 도메인 팩 섹션(운영자 5 + 나의 작업실)",
     ]);
   });
 
-  it("default active card (동호회) renders 7 board chips + differentiator", () => {
+  it("default active card (동호회) renders 8 board chips + differentiator", () => {
     render(<DomainPacks />);
-    // 동호회 카드(데스크탑 활성 + 모바일 리스트)에 보드칩 7종이 모두 노출
-    for (const label of ["N빵", "정모/번개", "갤러리", "자유"]) {
+    // 동호회 카드(데스크탑 활성 + 모바일 리스트)에 보드칩 8종이 모두 노출.
+    // '정모 준비' 를 여기 넣는 이유: 새 칩이 **화면에 렌더되는지**까지 봐야 한다 —
+    // 데이터 배열만 단언하면 카드가 앞 N개만 그려도 초록이다.
+    for (const label of ["N빵", "정모/번개", "갤러리", "자유", "정모 준비"]) {
       // 동호회 전용 라벨 — 다른 팩과 겹치지 않음
       expect(screen.getAllByText(label).length).toBeGreaterThan(0);
     }
@@ -68,6 +73,7 @@ describe("DomainPacks — 도메인 팩 섹션(운영자 5 + 나의 작업실)",
       "갤러리",
       "공지",
       "자유",
+      "정모 준비",
     ]);
   });
 

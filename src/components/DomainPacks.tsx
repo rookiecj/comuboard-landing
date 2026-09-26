@@ -42,7 +42,18 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     label: "동호회",
     persona: "동호회 총무세요?",
     value: "회비·출석·정모 신청을 한곳에 모아 모임 운영이 한결 가벼워져요.",
-    boards: ["회비", "N빵", "출석", "정모/번개", "갤러리", "공지", "자유"],
+    // 공유 할 일(정모 준비) — 적용하면 실제로 생기는 보드다(BE registry 마지막 자리).
+    // 카드가 덜 나열하면 방문자는 적용 전에 무엇이 생기는지 모른다.
+    boards: [
+      "회비",
+      "N빵",
+      "출석",
+      "정모/번개",
+      "갤러리",
+      "공지",
+      "자유",
+      "정모 준비",
+    ],
     differentiator: "회비 납부 현황을 회차별로 한눈에 · 번개는 1탭 참석",
   },
   {
@@ -62,7 +73,8 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     label: "스터디",
     persona: "스터디 운영하세요?",
     value: "진도·과제·Q&A·자료실을 한 공간에 모아 스터디가 끊기지 않아요.",
-    boards: ["진도", "과제", "출석", "Q&A", "자료실", "회비"],
+    // 공유 할 일(스터디 준비) — 발제·자료·장소 분담.
+    boards: ["진도", "과제", "출석", "Q&A", "자료실", "회비", "스터디 준비"],
     differentiator: "진도·자료실·Q&A를 한 공간에",
   },
   {
@@ -72,7 +84,8 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     label: "스포츠",
     persona: "운동 모임 매니저세요?",
     value: "출석·회비·경기 기록·라인업 편성을 한 번에 챙겨요.",
-    boards: ["출석", "회비", "경기", "라인업", "공지"],
+    // 공유 할 일(경기 준비) — 경기 일정·기록이 '언제/결과'를, 이 보드가 '누가 무엇을'을.
+    boards: ["출석", "회비", "경기", "라인업", "공지", "경기 준비"],
     differentiator: "경기 기록·라인업 편성까지",
   },
   {
@@ -103,6 +116,7 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
     label: "교회",
     persona: "교회 운영, 흩어진 일을 한곳에",
     value: "출석·헌금·주보·봉사 편성까지 교회 살림을 한 공간에서 챙겨요.",
+    // 공유 할 일(행사 준비) — 봉사 편성은 정기 역할 roster, 이쪽은 행사 단건 준비 분담.
     boards: [
       "출석",
       "헌금장부",
@@ -111,6 +125,7 @@ export const DOMAIN_PACKS: readonly DomainPack[] = [
       "주보",
       "중보기도",
       "봉사편성",
+      "행사 준비",
     ],
     differentiator: "주보 발행부터 봉사 편성·중보기도까지",
   },

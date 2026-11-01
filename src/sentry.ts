@@ -24,8 +24,10 @@ import type { ErrorEvent as SentryErrorEvent, EventHint } from "@sentry/react";
 /** Sentinel string used by tests + dashboards to confirm the redactor ran. */
 export const REDACTED = "REDACTED";
 
+// `ticket` — SSE 단명 일회용 티켓(SPRINT-428 B). 스트림 URL 쿼리로 가므로 실패한
+// 연결의 breadcrumb 에 실린다. 30초짜리라도 그 안에는 재사용 가능한 자격증명이다.
 const SENSITIVE_QUERY_KEYS =
-  /(token|code|magic|access_token|refresh_token|X-Amz-Signature|X-Amz-Credential|X-Amz-Security-Token)=[^&#]*/gi;
+  /(token|ticket|code|magic|access_token|refresh_token|X-Amz-Signature|X-Amz-Credential|X-Amz-Security-Token)=[^&#]*/gi;
 
 /**
  * Replace credential-bearing query params anywhere in a string.
